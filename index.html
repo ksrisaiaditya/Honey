@@ -1,721 +1,954 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Honey Chain System</title>
-
-<!-- QR CODE LIBRARY -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<title>Honey Chain System | Consumer Verification</title>
 
 <style>
-
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background: #f3f3f3;
+    background: #f7f8fa;
     color: #222;
+    padding: 20px;
 }
 
 .container {
-    max-width: 680px;
+    max-width: 1000px;
     margin: auto;
+}
+
+/* HEADER */
+
+.header {
     background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
+.logo {
+    font-size: 42px;
 }
 
-.subtitle {
-    text-align: center;
+.header h1 {
+    color: #8a5700;
+    font-size: 30px;
+    margin: 8px 0;
+}
+
+.header p {
     color: #666;
-    margin-bottom: 25px;
 }
 
-.qr-section {
-    text-align: center;
-    padding: 20px;
-}
+/* VERIFICATION */
 
-#qrcode {
-    display: inline-block;
-    padding: 15px;
+.verification {
     background: white;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    text-align: center;
+}
+
+.verified {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 9px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .batch-id {
-    margin-top: 15px;
-    font-size: 19px;
+    font-size: 22px;
     font-weight: bold;
+    color: #8a5700;
 }
 
-.scan-text {
-    color: #666;
+/* SECTIONS */
+
+.section {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    background: #222;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.85;
-}
-
-#details {
-    display: none;
-    margin-top: 25px;
-}
-
-.section-title {
-    margin-top: 25px;
-    padding: 13px;
-    background: #eeeeee;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
+.section h2 {
+    color: #8a5700;
+    font-size: 21px;
+    border-bottom: 2px solid #eeeeee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .row {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 11px 5px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    padding: 10px 0;
     border-bottom: 1px solid #eeeeee;
+}
+
+.row:last-child {
+    border-bottom: none;
 }
 
 .label {
     font-weight: bold;
+    color: #555;
 }
 
 .value {
-    text-align: right;
+    color: #222;
 }
 
-.normal {
+/* STATUS */
+
+.status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #e8f5e9;
+    color: #2e7d32;
     font-weight: bold;
 }
 
-.verified {
+.warning {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: #fff3cd;
+    color: #856404;
     font-weight: bold;
 }
 
-.alert {
-    font-weight: bold;
+/* TIMELINE */
+
+.timeline {
+    position: relative;
+    padding-left: 25px;
 }
+
+.timeline-item {
+    border-left: 3px solid #d6a441;
+    padding: 0 0 20px 20px;
+    position: relative;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    background: #d6a441;
+    border-radius: 50%;
+    position: absolute;
+    left: -8px;
+    top: 3px;
+}
+
+.timeline-item h3 {
+    color: #8a5700;
+    margin-bottom: 5px;
+}
+
+.timeline-item p {
+    color: #555;
+    font-size: 14px;
+}
+
+/* QUALITY CARDS */
+
+.quality-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.quality-card {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.quality-card h3 {
+    color: #8a5700;
+    margin-bottom: 8px;
+}
+
+.quality-card p {
+    color: #555;
+    line-height: 1.5;
+}
+
+/* FOOTER */
 
 .footer {
-    margin-top: 30px;
     text-align: center;
     color: #777;
     font-size: 13px;
+    padding: 20px;
 }
 
-</style>
+/* MOBILE */
 
+@media(max-width:700px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .quality-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+}
+</style>
 </head>
 
 
 <body>
 
-
 <div class="container">
 
 
-<!-- ===================================== -->
-<!-- TITLE -->
-<!-- ===================================== -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-<h1>🍯 Honey Chain System</h1>
+<div class="header">
 
-<div class="subtitle">
-Digital Honey Supply Chain Traceability & Monitoring
+    <div class="logo">🍯</div>
+
+    <h1>HONEY CHAIN SYSTEM</h1>
+
+    <p>
+        Consumer Honey Traceability & Verification Portal
+    </p>
+
 </div>
 
 
-<!-- ===================================== -->
-<!-- QR CODE -->
-<!-- ===================================== -->
+<!-- =====================================================
+     AUTHENTICITY / VERIFICATION
+===================================================== -->
 
-<div class="qr-section">
+<div class="verification">
 
-<div id="qrcode"></div>
+    <div class="verified">
+        ✓ BATCH RECORD VERIFIED
+    </div>
 
-<div class="batch-id">
-Batch ID: HNY-2026-A001
-</div>
+    <div class="batch-id">
+        Batch ID: HNY-2026-A001
+    </div>
 
-<p class="scan-text">
-Scan the QR Code to access this honey batch record.
-</p>
+    <p style="margin-top:10px;color:#666;">
+        This page provides the available traceability and monitoring
+        information associated with this honey batch.
+    </p>
 
 </div>
 
 
-<!-- ===================================== -->
-<!-- BUTTON -->
-<!-- ===================================== -->
+<!-- =====================================================
+     PRODUCT INFORMATION
+===================================================== -->
 
-<button onclick="toggleDetails()">
-Show Complete Batch Details
-</button>
+<div class="section">
 
+    <h2>🍯 Product Information</h2>
 
-<!-- ===================================== -->
-<!-- COMPLETE INFORMATION -->
-<!-- ===================================== -->
+    <div class="row">
+        <div class="label">Product</div>
+        <div class="value">Honey</div>
+    </div>
 
-<div id="details">
+    <div class="row">
+        <div class="label">Honey Type</div>
+        <div class="value">Multifloral Honey</div>
+    </div>
 
+    <div class="row">
+        <div class="label">Batch ID</div>
+        <div class="value">HNY-2026-A001</div>
+    </div>
 
-<!-- ===================================== -->
-<!-- 1. BATCH INFORMATION -->
-<!-- ===================================== -->
+    <div class="row">
+        <div class="label">Net Quantity</div>
+        <div class="value">500 g</div>
+    </div>
 
-<div class="section-title">
-📋 1. Batch Information
-</div>
+    <div class="row">
+        <div class="label">Container Status</div>
+        <div class="value">
+            <span class="status">Sealed</span>
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Batch ID</span>
-<span class="value">HNY-2026-A001</span>
 </div>
 
-<div class="row">
-<span class="label">Honey Type</span>
-<span class="value">Multifloral Honey</span>
-</div>
 
-<div class="row">
-<span class="label">Batch Status</span>
-<span class="value normal">Active</span>
-</div>
+<!-- =====================================================
+     ORIGIN
+===================================================== -->
 
+<div class="section">
 
-<!-- ===================================== -->
-<!-- 2. BEEKEEPER -->
-<!-- ===================================== -->
+    <h2>🐝 Origin & Beekeeper Information</h2>
 
-<div class="section-title">
-🐝 2. Beekeeper & Origin
-</div>
+    <div class="row">
+        <div class="label">Beekeeper ID</div>
+        <div class="value">BK-001</div>
+    </div>
 
-<div class="row">
-<span class="label">Beekeeper ID</span>
-<span class="value">BK-001</span>
-</div>
+    <div class="row">
+        <div class="label">Apiary ID</div>
+        <div class="value">APIARY-001</div>
+    </div>
 
-<div class="row">
-<span class="label">Apiary ID</span>
-<span class="value">APIARY-001</span>
-</div>
+    <div class="row">
+        <div class="label">Apiary Status</div>
+        <div class="value">Registered Apiary</div>
+    </div>
 
-<div class="row">
-<span class="label">Origin</span>
-<span class="value">Registered Apiary</span>
-</div>
+    <div class="row">
+        <div class="label">Production Origin</div>
+        <div class="value">
+            Registered Honey Production Site
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Harvest Date</span>
-<span class="value">02 September 2026</span>
 </div>
 
 
-<!-- ===================================== -->
-<!-- 3. HARVEST -->
-<!-- ===================================== -->
+<!-- =====================================================
+     HARVEST
+===================================================== -->
 
-<div class="section-title">
-🌼 3. Harvest Information
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">Harvest Method</span>
-<span class="value">Controlled Honey Extraction</span>
-</div>
+    <h2>🌼 Harvest Information</h2>
 
-<div class="row">
-<span class="label">Initial Weight</span>
-<span class="value">25.00 kg</span>
-</div>
+    <div class="row">
+        <div class="label">Harvest Date</div>
+        <div class="value">02 September 2026</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Extraction Method</div>
+        <div class="value">
+            Controlled Honey Extraction
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="label">Initial Batch Quantity</div>
+        <div class="value">25.00 kg</div>
+    </div>
 
-<div class="row">
-<span class="label">Collection Status</span>
-<span class="value normal">Recorded</span>
 </div>
 
 
-<!-- ===================================== -->
-<!-- 4. PROCESSING -->
-<!-- ===================================== -->
+<!-- =====================================================
+     PROCESSING
+===================================================== -->
 
-<div class="section-title">
-🏭 4. Processing Unit
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">Processing Unit</span>
-<span class="value">PU-001</span>
-</div>
+    <h2>🏭 Processing Information</h2>
 
-<div class="row">
-<span class="label">Processing Date</span>
-<span class="value">03 September 2026</span>
-</div>
+    <div class="row">
+        <div class="label">Processing Unit</div>
+        <div class="value">PU-001</div>
+    </div>
 
-<div class="row">
-<span class="label">Filtration</span>
-<span class="value normal">Completed</span>
-</div>
+    <div class="row">
+        <div class="label">Processing Date</div>
+        <div class="value">03 September 2026</div>
+    </div>
 
-<div class="row">
-<span class="label">Processing Status</span>
-<span class="value normal">Completed</span>
+    <div class="row">
+        <div class="label">Filtration</div>
+        <div class="value">
+            <span class="status">Completed</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="label">Processing Status</div>
+        <div class="value">
+            <span class="status">Completed</span>
+        </div>
+    </div>
+
 </div>
 
 
-<!-- ===================================== -->
-<!-- 5. PACKAGING -->
-<!-- ===================================== -->
+<!-- =====================================================
+     PACKAGING
+===================================================== -->
 
-<div class="section-title">
-📦 5. Packaging
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">Packaging Unit</span>
-<span class="value">PKG-001</span>
-</div>
+    <h2>🫙 Packaging Information</h2>
 
-<div class="row">
-<span class="label">Packaging Date</span>
-<span class="value">04 September 2026</span>
-</div>
+    <div class="row">
+        <div class="label">Packaging Unit</div>
+        <div class="value">PKG-001</div>
+    </div>
 
-<div class="row">
-<span class="label">Net Weight</span>
-<span class="value">500 g</span>
-</div>
+    <div class="row">
+        <div class="label">Packaging Date</div>
+        <div class="value">04 September 2026</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Packaged Quantity</div>
+        <div class="value">500 g</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Seal Status</div>
+        <div class="value">
+            <span class="status">Sealed</span>
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Container Status</span>
-<span class="value normal">Sealed</span>
 </div>
 
 
-<!-- ===================================== -->
-<!-- 6. IOT SENSORS -->
-<!-- ===================================== -->
+<!-- =====================================================
+     QUALITY MONITORING
+===================================================== -->
 
-<div class="section-title">
-📡 6. IoT Sensor Monitoring
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">Temperature Sensor</span>
-<span class="value">DHT22</span>
-</div>
+    <h2>🔬 Quality Monitoring</h2>
 
-<div class="row">
-<span class="label">Temperature</span>
-<span class="value">24 °C</span>
-</div>
+    <div class="quality-grid">
 
-<div class="row">
-<span class="label">Humidity</span>
-<span class="value">55 %</span>
-</div>
+        <div class="quality-card">
 
-<div class="row">
-<span class="label">Weight Sensor</span>
-<span class="value">HX711 + Load Cell</span>
-</div>
+            <h3>🌡 Temperature</h3>
 
-<div class="row">
-<span class="label">Current Weight</span>
-<span class="value">500 g</span>
-</div>
+            <p>
+                Recorded temperature:
+                <strong>24 °C</strong>
+            </p>
 
-<div class="row">
-<span class="label">Colour Sensor</span>
-<span class="value">TCS34725 RGB</span>
-</div>
+            <p>
+                Monitoring status:
+                <strong>Within monitored parameters</strong>
+            </p>
 
-<div class="row">
-<span class="label">Colour Status</span>
-<span class="value normal">Normal</span>
-</div>
+        </div>
 
-<div class="row">
-<span class="label">pH Sensor</span>
-<span class="value">pH Sensor Module</span>
-</div>
 
-<div class="row">
-<span class="label">pH Value</span>
-<span class="value">4.2</span>
-</div>
+        <div class="quality-card">
 
+            <h3>💧 Humidity</h3>
 
-<!-- ===================================== -->
-<!-- 7. STORAGE -->
-<!-- ===================================== -->
+            <p>
+                Recorded humidity:
+                <strong>55 %</strong>
+            </p>
 
-<div class="section-title">
-🏪 7. Storage Monitoring
-</div>
+            <p>
+                Monitoring status:
+                <strong>Within monitored parameters</strong>
+            </p>
 
-<div class="row">
-<span class="label">Storage Location</span>
-<span class="value">Warehouse WH-001</span>
-</div>
+        </div>
 
-<div class="row">
-<span class="label">Temperature</span>
-<span class="value">24 °C</span>
-</div>
 
-<div class="row">
-<span class="label">Humidity</span>
-<span class="value">55 %</span>
-</div>
+        <div class="quality-card">
 
-<div class="row">
-<span class="label">Storage Condition</span>
-<span class="value normal">
-Within Monitored Parameters
-</span>
-</div>
+            <h3>⚖ Weight</h3>
 
+            <p>
+                Recorded packaged weight:
+                <strong>500 g</strong>
+            </p>
 
-<!-- ===================================== -->
-<!-- 8. TRANSPORTATION -->
-<!-- ===================================== -->
+            <p>
+                Monitoring status:
+                <strong>Recorded</strong>
+            </p>
 
-<div class="section-title">
-🚚 8. Transportation
-</div>
+        </div>
 
-<div class="row">
-<span class="label">Transport ID</span>
-<span class="value">TR-001</span>
-</div>
 
-<div class="row">
-<span class="label">GPS Module</span>
-<span class="value">NEO-6M</span>
-</div>
+        <div class="quality-card">
 
-<div class="row">
-<span class="label">GPS Tracking</span>
-<span class="value normal">Active</span>
-</div>
+            <h3>🎨 Colour</h3>
 
-<div class="row">
-<span class="label">Transport Status</span>
-<span class="value">In Transit</span>
-</div>
+            <p>
+                Colour monitoring:
+                <strong>Normal</strong>
+            </p>
 
-<div class="row">
-<span class="label">Route Monitoring</span>
-<span class="value normal">Enabled</span>
-</div>
+            <p>
+                Status:
+                <strong>Within monitored range</strong>
+            </p>
 
+        </div>
 
-<!-- ===================================== -->
-<!-- 9. ESP32 -->
-<!-- ===================================== -->
 
-<div class="section-title">
-💻 9. IoT Controller
-</div>
+        <div class="quality-card">
 
-<div class="row">
-<span class="label">Controller</span>
-<span class="value">ESP32</span>
-</div>
+            <h3>🧪 pH</h3>
 
-<div class="row">
-<span class="label">Sensor Data Collection</span>
-<span class="value normal">Active</span>
-</div>
+            <p>
+                Recorded pH:
+                <strong>4.2</strong>
+            </p>
 
-<div class="row">
-<span class="label">Data Transmission</span>
-<span class="value normal">Active</span>
-</div>
+            <p>
+                Status:
+                <strong>Recorded for monitoring</strong>
+            </p>
 
+        </div>
 
-<!-- ===================================== -->
-<!-- 10. AI -->
-<!-- ===================================== -->
 
-<div class="section-title">
-🤖 10. AI / ML Monitoring
-</div>
+        <div class="quality-card">
 
-<div class="row">
-<span class="label">AI System</span>
-<span class="value">Machine Learning Model</span>
-</div>
+            <h3>🧼 Hygiene</h3>
 
-<div class="row">
-<span class="label">AI Analysis</span>
-<span class="value normal">Completed</span>
-</div>
+            <p>
+                Hygiene monitoring:
+                <strong>Active</strong>
+            </p>
 
-<div class="row">
-<span class="label">Anomaly Detection</span>
-<span class="value normal">
-No Abnormal Pattern
-</span>
-</div>
+            <p>
+                Processing hygiene record:
+                <strong>Recorded</strong>
+            </p>
 
-<div class="row">
-<span class="label">AI Status</span>
-<span class="value normal">Normal</span>
+        </div>
+
+    </div>
+
 </div>
 
 
-<!-- ===================================== -->
-<!-- 11. HYGIENE -->
-<!-- ===================================== -->
+<!-- =====================================================
+     STORAGE
+===================================================== -->
 
-<div class="section-title">
-🧼 11. Hygiene Monitoring
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">Environmental Monitoring</span>
-<span class="value normal">Active</span>
-</div>
+    <h2>🏢 Storage Information</h2>
 
-<div class="row">
-<span class="label">Storage Monitoring</span>
-<span class="value normal">Active</span>
-</div>
+    <div class="row">
+        <div class="label">Warehouse</div>
+        <div class="value">WH-001</div>
+    </div>
 
-<div class="row">
-<span class="label">Hygiene Status</span>
-<span class="value">
-Within Monitored Parameters
-</span>
-</div>
+    <div class="row">
+        <div class="label">Temperature Monitoring</div>
+        <div class="value">24 °C</div>
+    </div>
 
+    <div class="row">
+        <div class="label">Humidity Monitoring</div>
+        <div class="value">55 %</div>
+    </div>
 
-<!-- ===================================== -->
-<!-- 12. SECURITY -->
-<!-- ===================================== -->
+    <div class="row">
+        <div class="label">Storage Status</div>
+        <div class="value">
+            <span class="status">
+                Within monitored parameters
+            </span>
+        </div>
+    </div>
 
-<div class="section-title">
-🔐 12. Data Security
 </div>
 
-<div class="row">
-<span class="label">Batch Authentication</span>
-<span class="value verified">Enabled</span>
-</div>
 
-<div class="row">
-<span class="label">Access Control</span>
-<span class="value verified">Enabled</span>
-</div>
+<!-- =====================================================
+     TRANSPORTATION
+===================================================== -->
 
-<div class="row">
-<span class="label">Data Protection</span>
-<span class="value verified">Enabled</span>
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">Digital Record</span>
-<span class="value verified">Protected</span>
-</div>
+    <h2>🚚 Transportation Information</h2>
 
+    <div class="row">
+        <div class="label">Transport ID</div>
+        <div class="value">TR-001</div>
+    </div>
 
-<!-- ===================================== -->
-<!-- 13. RETAILER -->
-<!-- ===================================== -->
+    <div class="row">
+        <div class="label">Location Monitoring</div>
+        <div class="value">
+            GPS-enabled
+        </div>
+    </div>
 
-<div class="section-title">
-🏪 13. Retailer
-</div>
+    <div class="row">
+        <div class="label">Transport Status</div>
+        <div class="value">
+            In Transit
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Retailer ID</span>
-<span class="value">RET-001</span>
-</div>
+    <div class="row">
+        <div class="label">Route Monitoring</div>
+        <div class="value">
+            Enabled
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Batch Received</span>
-<span class="value normal">Yes</span>
-</div>
+    <div class="row">
+        <div class="label">Environmental Monitoring</div>
+        <div class="value">
+            Active
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">QR Verification</span>
-<span class="value verified">Successful</span>
 </div>
 
 
-<!-- ===================================== -->
-<!-- 14. CONSUMER -->
-<!-- ===================================== -->
+<!-- =====================================================
+     AI MONITORING
+===================================================== -->
 
-<div class="section-title">
-👤 14. Consumer Verification
-</div>
+<div class="section">
 
-<div class="row">
-<span class="label">QR Scan</span>
-<span class="value verified">Valid</span>
-</div>
+    <h2>🤖 AI-Based Monitoring</h2>
 
-<div class="row">
-<span class="label">Batch ID</span>
-<span class="value">HNY-2026-A001</span>
-</div>
+    <div class="row">
+        <div class="label">AI Monitoring</div>
+        <div class="value">
+            <span class="status">Active</span>
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Traceability</span>
-<span class="value verified">Complete</span>
-</div>
+    <div class="row">
+        <div class="label">Parameters Analysed</div>
+        <div class="value">
+            Temperature, Humidity, Weight, Colour, pH
+            and Transportation Data
+        </div>
+    </div>
 
-<div class="row">
-<span class="label">Batch Record</span>
-<span class="value verified">Available</span>
+    <div class="row">
+        <div class="label">Anomaly Detection</div>
+        <div class="value">
+            No abnormal pattern detected
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="label">AI Assessment</div>
+        <div class="value">
+            <span class="status">Normal</span>
+        </div>
+    </div>
+
 </div>
 
 
-<!-- ===================================== -->
-<!-- 15. FINAL STATUS -->
-<!-- ===================================== -->
+<!-- =====================================================
+     COMPLETE JOURNEY
+===================================================== -->
 
-<div class="section-title">
-✅ 15. Final Batch Status
-</div>
+<div class="section">
+
+    <h2>🔗 Complete Honey Journey</h2>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+            <h3>🐝 Beekeeper</h3>
+            <p>
+                Honey originated from a registered apiary
+                associated with the batch.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>🌼 Harvest</h3>
+            <p>
+                Harvested on 02 September 2026 using
+                controlled honey extraction.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>🏭 Processing</h3>
+            <p>
+                Batch processed at processing unit PU-001.
+                Filtration completed.
+            </p>
+        </div>
 
-<div class="row">
-<span class="label">Traceability</span>
-<span class="value verified">Complete</span>
+        <div class="timeline-item">
+            <h3>🫙 Packaging</h3>
+            <p>
+                Packaged on 04 September 2026 and
+                container sealed.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>🏢 Storage</h3>
+            <p>
+                Batch stored under monitored temperature
+                and humidity conditions.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>🚚 Transportation</h3>
+            <p>
+                Transportation and route monitoring
+                enabled.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>🏪 Retailer</h3>
+            <p>
+                Batch received by the registered retailer
+                and verification completed.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>📱 Consumer</h3>
+            <p>
+                Consumer can verify the associated batch
+                record and traceability information.
+            </p>
+        </div>
+
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     RETAILER VERIFICATION
+===================================================== -->
 
-<div class="row">
-<span class="label">IoT Monitoring</span>
-<span class="value verified">Active</span>
+<div class="section">
+
+    <h2>🏪 Retailer Verification</h2>
+
+    <div class="row">
+        <div class="label">Retailer ID</div>
+        <div class="value">RET-001</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Batch Received</div>
+        <div class="value">Yes</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Batch Verification</div>
+        <div class="value">
+            <span class="status">Successful</span>
+        </div>
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     CONSUMER VERIFICATION
+===================================================== -->
+
+<div class="section">
+
+    <h2>📱 Consumer Verification</h2>
 
-<div class="row">
-<span class="label">AI Monitoring</span>
-<span class="value verified">Normal</span>
+    <div class="row">
+        <div class="label">Batch Record</div>
+        <div class="value">Available</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Batch ID Status</div>
+        <div class="value">
+            <span class="status">Valid</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="label">Traceability</div>
+        <div class="value">
+            <span class="status">Complete</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="label">Record Status</div>
+        <div class="value">
+            <span class="status">Verified</span>
+        </div>
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     SECURITY
+===================================================== -->
+
+<div class="section">
+
+    <h2>🔐 Record Security</h2>
 
-<div class="row">
-<span class="label">Security</span>
-<span class="value verified">Protected</span>
+    <div class="row">
+        <div class="label">Batch Authentication</div>
+        <div class="value">Enabled</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Access Control</div>
+        <div class="value">Enabled</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Data Protection</div>
+        <div class="value">Enabled</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Digital Record</div>
+        <div class="value">Protected</div>
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     FINAL CONSUMER SUMMARY
+===================================================== -->
+
+<div class="section">
+
+    <h2>✅ Consumer Summary</h2>
 
-<div class="row">
-<span class="label">Overall Status</span>
-<span class="value verified">
-MONITORED BATCH
-</span>
+    <div class="row">
+        <div class="label">Product</div>
+        <div class="value">Multifloral Honey</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Batch</div>
+        <div class="value">HNY-2026-A001</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Origin</div>
+        <div class="value">Registered Honey Production Site</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Processing</div>
+        <div class="value">Completed</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Packaging</div>
+        <div class="value">Sealed</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Environmental Monitoring</div>
+        <div class="value">Active</div>
+    </div>
+
+    <div class="row">
+        <div class="label">AI Monitoring</div>
+        <div class="value">No abnormal pattern detected</div>
+    </div>
+
+    <div class="row">
+        <div class="label">Traceability</div>
+        <div class="value">
+            <span class="status">Complete</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="label">Overall Batch Status</div>
+        <div class="value">
+            <span class="status">MONITORED BATCH</span>
+        </div>
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     IMPORTANT DISCLAIMER
+===================================================== -->
+
+<div class="section">
+
+    <h2>ℹ️ Consumer Information</h2>
+
+    <p style="line-height:1.7;color:#555;">
+
+        The information displayed on this page represents
+        the recorded traceability and monitoring information
+        associated with the batch.
+
+        IoT sensors and AI-based monitoring help identify
+        environmental changes and abnormal patterns.
+        They do not by themselves establish that honey is
+        completely free from adulteration, contaminants,
+        pathogens or other food-safety hazards.
+
+        Definitive food-safety and composition claims should
+        be supported by appropriate laboratory testing and
+        applicable regulatory requirements.
 
+    </p>
 
 </div>
 
 
 <div class="footer">
-Honey Chain System • IoT • AI • Traceability • Security
+
+    Honey Chain System<br>
+    IoT + AI + Secure Digital Traceability
+
 </div>
 
-
 </div>
-
-
-<script>
-
-/*
-====================================================
-DEMO QR CODE
-====================================================
-
-For now, ALL information is contained in this
-HTML demonstration.
-
-The QR contains the unique Batch ID.
-
-Later, this can be replaced with your actual
-website/Firebase URL.
-
-Example:
-
-https://yourwebsite.com/batch/HNY-2026-A001
-*/
-
-const qrData = "HNY-2026-A001";
-
-new QRCode(
-    document.getElementById("qrcode"),
-    {
-        text: qrData,
-        width: 220,
-        height: 220
-    }
-);
-
-
-/*
-====================================================
-SHOW / HIDE DETAILS
-====================================================
-*/
-
-function toggleDetails() {
-
-    const details = document.getElementById("details");
-    const button = document.querySelector("button");
-
-    if (details.style.display === "none" ||
-        details.style.display === "") {
-
-        details.style.display = "block";
-
-        button.innerText =
-            "Hide Complete Batch Details";
-
-    } else {
-
-        details.style.display = "none";
-
-        button.innerText =
-            "Show Complete Batch Details";
-    }
-}
-
-</script>
 
 </body>
-
 </html>
