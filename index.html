@@ -2,953 +2,5144 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Honey Chain System | Consumer Verification</title>
+<meta name="viewport" content="width=device-width,initial-scale=0.50">
+<meta name="theme-color" content="#08110d">
+<meta name="description" content="HoneyChain - Advanced Honey Blockchain Traceability Platform">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="shortcut icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<title>HONEYCHAIN | Intelligent Honey Traceability</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+/* =========================================================
+   HONEYCHAIN
+   ADVANCED SINGLE-FILE TRACEABILITY PLATFORM
+   ========================================================= */
+
+:root{
+    --bg:#050b08;
+    --bg2:#08130e;
+    --panel:rgba(16,31,23,.82);
+    --panel2:rgba(23,42,31,.72);
+    --gold:#ffc928;
+    --gold2:#ffdf72;
+    --amber:#ff9f1a;
+    --green:#34d399;
+    --green2:#10b981;
+    --cyan:#38bdf8;
+    --blue:#60a5fa;
+    --red:#fb7185;
+    --purple:#a78bfa;
+    --text:#f7faf7;
+    --muted:#9fb0a5;
+    --line:rgba(255,255,255,.09);
+    --shadow:0 25px 70px rgba(0,0,0,.35);
+    --radius:24px;
 }
 
-body {
-    background: #f7f8fa;
-    color: #222;
-    padding: 20px;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-.container {
-    max-width: 1000px;
-    margin: auto;
+html{
+    scroll-behavior:smooth;
 }
 
-/* HEADER */
+body{
+    min-height:100vh;
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(255,201,40,.12),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(52,211,153,.08),transparent 30%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+    color:var(--text);
+    overflow-x:hidden;
+}
+body,
+body *{
+    text-transform: uppercase;
+}
 
-.header {
-    background: white;
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.background-grid{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom,black,transparent);
+    z-index:-3;
+}
+
+.orb{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.18;
+    pointer-events:none;
+    z-index:-2;
+    animation:floatOrb 10s ease-in-out infinite alternate;
+}
+
+.orb.one{
+    width:300px;
+    height:300px;
+    background:var(--gold);
+    top:5%;
+    left:-100px;
+}
+
+.orb.two{
+    width:260px;
+    height:260px;
+    background:var(--green);
+    right:-100px;
+    top:35%;
+    animation-delay:2s;
+}
+
+.orb.three{
+    width:220px;
+    height:220px;
+    background:var(--cyan);
+    bottom:0;
+    left:45%;
+    animation-delay:4s;
+}
+
+@keyframes floatOrb{
+    from{transform:translate3d(0,0,0)}
+    to{transform:translate3d(40px,-25px,0)}
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.boot{
+    position:fixed;
+    inset:0;
+    background:#030705;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    transition:opacity .8s,visibility .8s;
+}
+
+.boot.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.honey-logo{
+    width:90px;
+    height:90px;
+    position:relative;
+    margin-bottom:25px;
+    animation:logoFloat 2s ease-in-out infinite;
+}
+
+.honey-logo:before{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    background:linear-gradient(145deg,#ffe483,#e99b00);
+    clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+
+    box-shadow:0 0 45px rgba(255,201,40,.5);
+}
+
+.honey-logo:after{
+    content:"BUZZTECH";
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    color:#281900;
+    font-weight:1000;
+    font-size:18px;
+}
+
+@keyframes logoFloat{
+    50%{transform:translateY(-8px) rotate(2deg)}
+}
+
+.boot-title{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:4px;
+}
+
+.boot-sub{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:20px;
+    letter-spacing:3px;
+}
+
+.boot-line{
+    width:300px;
+    height:10px;
+    background:rgba(255,255,255,.08);
+    border-radius:10px;
+    margin-top:25px;
+    overflow:hidden;
+}
+
+.boot-line span{
+    display:block;
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--amber),var(--gold),var(--green));
+    animation:bootLoad 4.99s ease forwards;
+}
+
+@keyframes bootLoad{
+    to{width:100%}
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:5000;
+    backdrop-filter:blur(22px);
+    background:rgba(4,10,7,.75);
+    border-bottom:1px solid var(--line);
+}
+
+.nav{
+    max-width:1600px;
+    margin:auto;
+    min-height:74px;
+    padding:0 28px;
+    display:flex;
+    font-size:30px;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    font-weight:950;
+    letter-spacing:1px;
+}
+
+.brand-mark{
+    width:30px;
+    height:30px;
+    border-radius:13px;
+    background:linear-gradient(145deg,var(--gold2),var(--amber));
+    color:#281900;
+    display:grid;
+    place-items:center;
+    font-weight:950;
+    box-shadow:0 0 25px rgba(255,201,40,.22);
+}
+
+.brand small{
+    display:block;
+    color:var(--muted);
+    font-size:25px;
     text-align: center;
-    padding: 30px 20px;
-    border-radius: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    letter-spacing:2px;
+    margin-top:2px;
 }
-
-.logo {
-    font-size: 42px;
-}
-
-.header h1 {
-    color: #8a5700;
-    font-size: 30px;
-    margin: 8px 0;
-}
-
-.header p {
-    color: #666;
-}
-
-/* VERIFICATION */
-
-.verification {
-    background: white;
-    padding: 22px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+.brand ultra{
+    display:block;
+    color:var(--muted);
+    font-size:25px;
     text-align: center;
+    letter-spacing:2px;
+    margin-top:2px;
 }
 
-.verified {
-    display: inline-block;
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 9px 18px;
-    border-radius: 25px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.nav-status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--muted);
+    font-size:30px;
 }
 
-.batch-id {
-    font-size: 22px;
-    font-weight: bold;
-    color: #8a5700;
+.status-dot{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    animation:pulseDot .15s infinite;
 }
 
-/* SECTIONS */
-
-.section {
-    background: white;
-    padding: 24px;
-    border-radius: 14px;
-    margin-bottom: 18px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+@keyframes pulseDot{
+    50%{
+        transform:scale(1.8);
+        opacity:.4;
+    }
 }
 
-.section h2 {
-    color: #8a5700;
-    font-size: 21px;
-    border-bottom: 2px solid #eeeeee;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+/* =========================================================
+   HERO
+   ========================================================= */
+
+main{
+    max-width:1600px;
+    margin:auto;
+    padding:0 28px 70px;
 }
 
-.row {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    padding: 10px 0;
-    border-bottom: 1px solid #eeeeee;
+.hero{
+    min-height:650px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    align-items:center;
+    gap:60px;
+    position:relative;
 }
 
-.row:last-child {
-    border-bottom: none;
+.hero-copy{
+    animation:rise .9s ease both;
 }
 
-.label {
-    font-weight: bold;
-    color: #555;
+.eyebrow{
+    display:inline-flex;
+    gap:9px;
+    align-items:center;
+    border:1px solid rgba(255,201,40,.25);
+    background:rgba(255,201,40,.06);
+    color:var(--gold2);
+    padding:8px 13px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight: 1000;
+    letter-spacing:2px;
+    text-transform:uppercase;
 }
 
-.value {
-    color: #222;
+.hero h1{
+    margin-top:24px;
+    font-size:clamp(48px,7vw,94px);
+    line-height:.92;
+    letter-spacing:-5px;
+    max-width:850px;
 }
 
-/* STATUS */
-
-.status {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: #e8f5e9;
-    color: #2e7d32;
-    font-weight: bold;
+.hero h1 span{
+    background:linear-gradient(
+        100deg,
+        #fff,
+        var(--gold2),
+        var(--amber),
+        var(--green)
+    );
+    background-size:250%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:gradientMove 6s linear infinite;
 }
 
-.warning {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: #fff3cd;
-    color: #856404;
-    font-weight: bold;
+@keyframes gradientMove{
+    to{background-position:250% center}
 }
 
-/* TIMELINE */
-
-.timeline {
-    position: relative;
-    padding-left: 25px;
+.hero p{
+    max-width:700px;
+    margin-top:27px;
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.8;
 }
 
-.timeline-item {
-    border-left: 3px solid #d6a441;
-    padding: 0 0 20px 20px;
-    position: relative;
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:13px;
+    margin-top:30px;
 }
 
-.timeline-item:last-child {
-    padding-bottom: 0;
+.primary-btn,
+.secondary-btn{
+    border:0;
+    border-radius:15px;
+    padding:15px 21px;
+    font-weight:850;
+    transition:.25s;
 }
 
-.timeline-item::before {
-    content: "";
-    width: 13px;
-    height: 13px;
-    background: #d6a441;
-    border-radius: 50%;
-    position: absolute;
-    left: -8px;
-    top: 3px;
+.primary-btn{
+    background:linear-gradient(135deg,var(--gold2),var(--amber));
+    color:#241800;
+    box-shadow:0 15px 35px rgba(255,159,26,.2);
 }
 
-.timeline-item h3 {
-    color: #8a5700;
-    margin-bottom: 5px;
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 20px 45px rgba(255,159,26,.3);
 }
 
-.timeline-item p {
-    color: #555;
-    font-size: 14px;
+.secondary-btn{
+    background:linear-gradient(135deg,var(--gold2),var(--green));
+    color:black;
+    border:1px solid var(--line);
 }
 
-/* QUALITY CARDS */
-
-.quality-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+.secondary-btn:hover{
+    transform:translateY(-3px);
+    background:rgba(255,255,255,.1);
 }
 
-.quality-card {
-    border: 1px solid #eee;
-    border-radius: 10px;
-    padding: 18px;
+.hero-visual{
+    position:relative;
+    min-height:480px;
+    display:grid;
+    place-items:center;
 }
 
-.quality-card h3 {
-    color: #8a5700;
-    margin-bottom: 8px;
+.honey-orbit{
+    width:min(430px,80vw);
+    aspect-ratio:1;
+    position:relative;
+    border-radius:50%;
+    border:1px solid rgba(255,201,40,.16);
+    box-shadow:
+        0 0 80px rgba(255,201,40,.08),
+        inset 0 0 80px rgba(255,201,40,.05);
+    animation:none;
 }
 
-.quality-card p {
-    color: #555;
-    line-height: 1.5;
+.honey-orbit:before,
+.honey-orbit:after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    border:1px dashed rgba(52,211,153,.18);
+    inset:35px;
 }
 
-/* FOOTER */
-
-.footer {
-    text-align: center;
-    color: #777;
-    font-size: 13px;
-    padding: 20px;
+.honey-orbit:after{
+    inset:80px;
+    border-color:rgba(56,189,248,.2);
 }
 
-/* MOBILE */
+@keyframes slowRotate{
+    to{transform:rotate(360deg)}
+}
 
-@media(max-width:700px) {
+.orbit-center{
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:
+        radial-gradient(circle at 35% 25%,#ffe89a,#ffbb21 45%,#b36b00);
+    box-shadow:
+        0 0 70px rgba(255,201,40,.32),
+        inset -20px -20px 50px rgba(105,53,0,.3);
+    display:grid;
+    place-items:center;
+    z-index:5;
+}
 
-    body {
-        padding: 10px;
+.orbit-center span{
+    color:#2c1a00;
+    font-weight:950;
+    font-size:34px;
+    letter-spacing:-2px;
+}
+
+/* =========================================================
+   SIX-NODE CIRCULAR ORBIT
+   ========================================================= */
+
+.orbit-node{
+    position:absolute;
+    width:55px;
+    height:55px;
+    left:50%;
+    top:50%;
+    margin-left:-27.5px;
+    margin-top:-27.5px;
+
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+
+    background:rgba(7,17,12,.95);
+    border:1px solid var(--line);
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+
+    offset-path:circle(187.5px at 50% 50%);
+    offset-rotate:0deg;
+
+    animation:orbitMove 12s linear infinite;
+}
+
+/* Six nodes are children 2–7 because the honey
+   center is the first child. */
+
+.orbit-node:nth-child(2){
+    animation-delay:0s;
+}
+
+.orbit-node:nth-child(3){
+    animation-delay:-2s;
+}
+
+.orbit-node:nth-child(4){
+    animation-delay:-4s;
+}
+
+.orbit-node:nth-child(5){
+    animation-delay:-6s;
+}
+
+.orbit-node:nth-child(6){
+    animation-delay:-8s;
+}
+
+.orbit-node:nth-child(7){
+    animation-delay:-10s;
+}
+
+@keyframes orbitMove{
+    from{
+        offset-distance:0%;
     }
 
-    .row {
-        grid-template-columns: 1fr;
-        gap: 5px;
+    to{
+        offset-distance:100%;
+    }
+}
+
+.orbit-node b{
+    font-size:20px;
+}
+@keyframes nodeFloat{
+    50%{transform:translateY(-8px)}
+}
+
+.orbit-node b{
+    font-size:20px;
+}
+
+/* =========================================================
+   ACCESS PORTALS
+   ========================================================= */
+
+.portal-section{
+    margin-top:30px;
+    scroll-margin-top:100px;
+}
+
+.portal-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.portal-card{
+    position:relative;
+    overflow:hidden;
+    padding:35px;
+    border:1px solid var(--line);
+    border-radius:30px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+    box-shadow:var(--shadow);
+    min-height:300px;
+    transition:.35s;
+}
+
+.portal-card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(255,201,40,.25);
+}
+
+.portal-card.chain{
+    background:
+        radial-gradient(circle at 85% 20%,rgba(56,189,248,.12),transparent 35%),
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+}
+
+.portal-card.consumer{
+    background:
+        radial-gradient(circle at 85% 20%,rgba(255,201,40,.12),transparent 35%),
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+}
+
+.portal-icon{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    display:grid;
+    place-items:center;
+    font-size:26px;
+    background:rgba(255,255,255,.07);
+    margin-bottom:22px;
+}
+
+.portal-card h2{
+    font-size:27px;
+}
+
+.portal-card p{
+    color:var(--muted);
+    margin-top:9px;
+    line-height:1.7;
+}
+
+.portal-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:20px;
+}
+
+.tag{
+    font-size:10px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.045);
+    border-radius:999px;
+    padding:6px 9px;
+    color:#c9d4cc;
+}
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:8000;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(15px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.active{
+    display:flex;
+    animation:fadeIn .3s ease;
+}
+
+.modal-box{
+    width:min(510px,100%);
+    border:1px solid var(--line);
+    background:
+        linear-gradient(145deg,rgba(21,39,28,.98),rgba(5,13,9,.98));
+    border-radius:28px;
+    padding:30px;
+    box-shadow:0 40px 100px rgba(0,0,0,.6);
+    animation:modalIn .35s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes modalIn{
+    from{transform:translateY(25px) scale(.97);opacity:0}
+    to{transform:none;opacity:1}
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.close{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.05);
+    color:white;
+}
+
+.field{
+    margin-top:15px;
+}
+
+.field label{
+    display:block;
+    color:#b8c5bc;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    border:1px solid var(--line);
+    background:#07100b;
+    color:white;
+    padding:14px 15px;
+    border-radius:13px;
+    outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:rgba(255,201,40,.5);
+    box-shadow:0 0 0 3px rgba(255,201,40,.08);
+}
+
+.modal-message{
+    min-height:22px;
+    margin-top:14px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.modal-submit{
+    width:100%;
+    margin-top:20px;
+}
+
+/* =========================================================
+   DASHBOARD COMMON
+   ========================================================= */
+
+.dashboard{
+    display:none;
+    animation:rise .7s ease;
+}
+
+.dashboard.active{
+    display:block;
+}
+
+@keyframes rise{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.dashboard-top{
+    padding:55px 0 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+}
+
+.dashboard-top h2{
+    font-size:clamp(30px,5vw,56px);
+    letter-spacing:-2px;
+}
+
+.dashboard-top p{
+    color:var(--muted);
+    margin-top:8px;
+}
+
+.live-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 13px;
+    border:1px solid rgba(52,211,153,.2);
+    background:rgba(52,211,153,.07);
+    color:#8ff1c4;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.live-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+    animation:pulseDot .5s infinite;
+}
+
+.metrics{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:13px;
+}
+
+.metric{
+    min-height:130px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:20px;
+    background:rgba(255,255,255,.035);
+    position:relative;
+    overflow:hidden;
+}
+
+.metric:after{
+    content:"";
+    position:absolute;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    right:-40px;
+    bottom:-40px;
+    background:rgba(255,201,40,.07);
+}
+
+.metric-label{
+    color:var(--muted);
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+    font-weight:800;
+}
+
+.metric-value{
+    font-size:31px;
+    font-weight:950;
+    margin-top:9px;
+}
+
+.metric-foot{
+    margin-top:6px;
+    color:#7f9386;
+    font-size:11px;
+}
+
+/* =========================================================
+   DASHBOARD GRID
+   ========================================================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:18px;
+    margin-top:18px;
+}
+
+.panel{
+    border:1px solid var(--line);
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.048),rgba(255,255,255,.018));
+    border-radius:24px;
+    overflow:hidden;
+}
+
+.panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:20px 22px;
+    border-bottom:1px solid var(--line);
+}
+
+.panel-head h3{
+    font-size:15px;
+}
+
+.panel-head span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.panel-body{
+    padding:20px;
+}
+
+/* =========================================================
+   BATCH TABLE
+   ========================================================= */
+
+.table-wrap{
+    overflow:auto;
+}
+
+.batch-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+.batch-table th{
+    text-align:left;
+    color:#8ea096;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:1.1px;
+    padding:12px;
+    border-bottom:1px solid var(--line);
+}
+
+.batch-table td{
+    padding:13px 12px;
+    border-bottom:1px solid rgba(255,255,255,.05);
+    font-size:12px;
+}
+
+.batch-table tr{
+    transition:.2s;
+}
+
+.batch-table tbody tr:hover{
+    background:rgba(255,255,255,.04);
+}
+
+.batch-code{
+    font-family:monospace;
+    color:var(--gold2);
+    font-weight:900;
+}
+
+.signal{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+}
+
+.signal i{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 8px var(--green);
+}
+
+.good{
+    color:#77e9ae;
+}
+
+.warn{
+    color:#ffd76b;
+}
+
+.danger{
+    color:#ff8799;
+}
+
+/* =========================================================
+   GPS MAP
+   ========================================================= */
+
+.map{
+    height:430px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 50%,rgba(52,211,153,.06),transparent 35%),
+        linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px),
+        #06110d;
+    background-size:auto,34px 34px,34px 34px;
+}
+
+.map:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(25deg,transparent 45%,rgba(255,255,255,.03) 46%,transparent 47%),
+        linear-gradient(-18deg,transparent 53%,rgba(255,255,255,.025) 54%,transparent 55%);
+}
+
+.map-label{
+    position:absolute;
+    top:15px;
+    left:15px;
+    z-index:5;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(8px);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:9px 11px;
+    font-size:10px;
+    color:#c8d7ce;
+}
+
+.route{
+    position:absolute;
+    left:10%;
+    right:10%;
+    top:55%;
+    height:2px;
+    background:linear-gradient(90deg,
+        transparent,
+        rgba(52,211,153,.45),
+        rgba(255,201,40,.75),
+        rgba(56,189,248,.5),
+        transparent);
+    transform:rotate(-10deg);
+    filter:drop-shadow(0 0 5px rgba(52,211,153,.5));
+}
+
+.route2{
+    position:absolute;
+    left:28%;
+    top:23%;
+    width:45%;
+    height:2px;
+    background:rgba(255,255,255,.13);
+    transform:rotate(35deg);
+}
+
+.gps-node{
+    position:absolute;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 0 7px rgba(52,211,153,.08),0 0 25px var(--green);
+    z-index:3;
+}
+
+.gps-node:after{
+    content:"";
+    position:absolute;
+    inset:-15px;
+    border:1px solid rgba(52,211,153,.2);
+    border-radius:50%;
+    animation:radar 1.8s infinite;
+}
+
+@keyframes radar{
+    from{transform:scale(.4);opacity:.8}
+    to{transform:scale(2);opacity:0}
+}
+
+.gps-node.n1{left:15%;top:64%}
+.gps-node.n2{left:36%;top:54%}
+.gps-node.n3{left:55%;top:48%}
+.gps-node.n4{left:72%;top:38%}
+.gps-node.n5{left:87%;top:30%}
+
+.vehicle{
+    position:absolute;
+    left:50%;
+    top:48%;
+    width:34px;
+    height:20px;
+    border-radius:6px;
+    background:linear-gradient(135deg,#ffe18b,#f59e0b);
+    box-shadow:0 0 30px rgba(255,201,40,.6);
+    z-index:10;
+    transition:left .9s linear,top .9s linear;
+}
+
+.vehicle:before{
+    content:"";
+    position:absolute;
+    width:9px;
+    height:9px;
+    background:#06110d;
+    border-radius:50%;
+    left:4px;
+    bottom:-4px;
+    box-shadow:18px 0 #06110d;
+}
+
+.vehicle:after{
+    content:"LIVE";
+    position:absolute;
+    left:40px;
+    top:-7px;
+    color:#ffdf72;
+    font-size:8px;
+    font-weight:900;
+}
+
+/* =========================================================
+   TELEMETRY
+   ========================================================= */
+
+.telemetry-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.sensor-card{
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:17px;
+    background:rgba(0,0,0,.13);
+}
+
+.sensor-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    color:#aabbb0;
+    font-size:10px;
+}
+
+.sensor-value{
+    font-size:26px;
+    font-weight:950;
+    margin-top:9px;
+}
+
+.sensor-bar{
+    height:5px;
+    margin-top:12px;
+    background:rgba(255,255,255,.07);
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.sensor-bar span{
+    height:100%;
+    display:block;
+    width:65%;
+    border-radius:20px;
+    background:linear-gradient(90deg,var(--green),var(--gold));
+    transition:width .8s;
+}
+
+/* =========================================================
+   BLOCKCHAIN
+   ========================================================= */
+
+.chain-list{
+    display:grid;
+    gap:10px;
+}
+
+.chain-block{
+    border:1px solid var(--line);
+    background:rgba(0,0,0,.12);
+    border-radius:15px;
+    padding:14px;
+    position:relative;
+    overflow:hidden;
+}
+
+.chain-block:before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:3px;
+    background:linear-gradient(var(--gold),var(--green));
+}
+
+.block-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.block-index{
+    font-weight:900;
+    color:var(--gold2);
+}
+
+.hash{
+    font-family:monospace;
+    color:#7fd9ad;
+    font-size:10px;
+    margin-top:7px;
+    word-break:break-all;
+}
+
+.block-time{
+    color:#74857b;
+    font-size:9px;
+}
+
+/* =========================================================
+   CONSUMER DASHBOARD
+   ========================================================= */
+
+.consumer-hero{
+    border:1px solid var(--line);
+    border-radius:30px;
+    padding:35px;
+    background:
+        radial-gradient(circle at 90% 20%,rgba(255,201,40,.15),transparent 35%),
+        linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018));
+    position:relative;
+    overflow:hidden;
+}
+
+.consumer-hero:after{
+    content:"";
+    position:absolute;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    right:-100px;
+    bottom:-100px;
+    background:rgba(255,201,40,.08);
+    filter:blur(5px);
+}
+
+.verification-row{
+    display:flex;
+    gap:12px;
+    max-width:800px;
+    margin-top:25px;
+}
+
+.verification-row input{
+    flex:1;
+    min-width:0;
+    border:1px solid var(--line);
+    background:#06100a;
+    color:white;
+    border-radius:15px;
+    padding:16px;
+    outline:none;
+}
+
+.consumer-status{
+    margin-top:12px;
+    min-height:22px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.trust-score{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-top:25px;
+}
+
+.score-ring{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:
+        conic-gradient(var(--green) 0deg,var(--green) 335deg,rgba(255,255,255,.08) 335deg);
+    display:grid;
+    place-items:center;
+    position:relative;
+}
+
+.score-ring:after{
+    content:"";
+    position:absolute;
+    inset:9px;
+    border-radius:50%;
+    background:#09140e;
+}
+
+.score-ring span{
+    position:relative;
+    z-index:2;
+    font-size:21px;
+    font-weight:950;
+}
+
+.consumer-data{
+    display:none;
+    margin-top:20px;
+}
+
+.consumer-data.active{
+    display:block;
+    animation:rise .6s ease;
+}
+
+.consumer-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
+.info-card{
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:19px;
+    background:rgba(255,255,255,.035);
+}
+
+.info-card .icon{
+    font-size:23px;
+}
+
+.info-card h4{
+    margin-top:13px;
+    font-size:11px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.info-card strong{
+    display:block;
+    margin-top:6px;
+    font-size:17px;
+}
+
+.info-card small{
+    display:block;
+    margin-top:5px;
+    color:#819087;
+}
+
+.last-record{
+    display:inline-flex;
+    margin-top:15px;
+    padding:8px 11px;
+    border-radius:9px;
+    background:rgba(52,211,153,.07);
+    color:#8debbb;
+    font-size:10px;
+}
+
+/* =========================================================
+   PROCESS ANIMATION
+   ========================================================= */
+
+.process-section{
+    margin-top:25px;
+}
+
+.process-stage{
+    position:relative;
+    min-height:430px;
+    border:1px solid var(--line);
+    border-radius:25px;
+    overflow:hidden;
+    background:
+        linear-gradient(to bottom,
+            rgba(56,189,248,.04),
+            rgba(255,201,40,.05),
+            rgba(52,211,153,.04));
+}
+
+.process-ground{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:110px;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(25,55,33,.8),
+            rgba(8,25,14,.95)
+        );
+}
+
+.process-sun{
+    position:absolute;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#ffe79b;
+    box-shadow:0 0 60px rgba(255,201,40,.45);
+    right:12%;
+    top:45px;
+}
+
+.cloud{
+    position:absolute;
+    width:100px;
+    height:30px;
+    background:rgba(255,255,255,.07);
+    border-radius:50px;
+    top:65px;
+    left:15%;
+    filter:blur(1px);
+    animation:cloudMove 18s linear infinite;
+}
+
+.cloud.two{
+    top:120px;
+    left:45%;
+    transform:scale(.7);
+    animation-duration:24s;
+}
+
+@keyframes cloudMove{
+    from{transform:translateX(-20px)}
+    to{transform:translateX(130px)}
+}
+
+.hive{
+    position:absolute;
+    bottom:110px;
+    left:12%;
+    width:110px;
+    height:125px;
+    background:linear-gradient(90deg,#b87514,#f1b329,#b87514);
+    border-radius:45% 45% 25% 25%;
+    box-shadow:0 18px 30px rgba(0,0,0,.3);
+}
+
+.hive:before,
+.hive:after{
+    content:"";
+    position:absolute;
+    left:10px;
+    right:10px;
+    height:9px;
+    background:#6d3e06;
+    border-radius:10px;
+}
+
+.hive:before{top:35px}
+.hive:after{top:70px}
+
+.bee{
+    position:absolute;
+    width:28px;
+    height:17px;
+    border-radius:50%;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #1c1200 0 5px,
+            #ffcb27 5px 10px
+        );
+    z-index:8;
+    animation:beeFly 7s linear infinite;
+}
+
+.bee:before,
+.bee:after{
+    content:"";
+    position:absolute;
+    width:15px;
+    height:9px;
+    border-radius:50%;
+    background:rgba(220,245,255,.55);
+    top:-5px;
+}
+
+.bee:before{left:-5px}
+.bee:after{right:-5px}
+
+.bee.one{
+    left:20%;
+    bottom:210px;
+}
+
+.bee.two{
+    left:35%;
+    bottom:270px;
+    animation-delay:2s;
+}
+
+.bee.three{
+    left:50%;
+    bottom:200px;
+    animation-delay:4s;
+}
+
+@keyframes beeFly{
+    0%{transform:translate(0,0) rotate(5deg)}
+    25%{transform:translate(130px,-60px) rotate(-5deg)}
+    50%{transform:translate(260px,30px) rotate(7deg)}
+    75%{transform:translate(390px,-70px) rotate(-7deg)}
+    100%{transform:translate(600px,0) rotate(5deg)}
+}
+
+.process-machine{
+    position:absolute;
+    right:12%;
+    bottom:110px;
+    width:170px;
+    height:170px;
+    border:8px solid #65766a;
+    border-radius:28px;
+    background:linear-gradient(#b8c3b9,#69766c);
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+
+.process-machine:before{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle,#ffefae 0 10%,#e9a700 11% 35%,#7b4b00 36% 39%,#e8a800 40% 100%);
+    top:37px;
+    left:37px;
+    box-shadow:inset 0 0 20px rgba(0,0,0,.4);
+    animation:spinHoney 3s linear infinite;
+}
+
+@keyframes spinHoney{
+    to{transform:rotate(360deg)}
+}
+
+.process-bottle{
+    position:absolute;
+    right:38%;
+    bottom:110px;
+    width:55px;
+    height:105px;
+    border-radius:12px 12px 18px 18px;
+    border:3px solid #ffe79a;
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 0 20%,
+            #d99800 20% 88%,
+            transparent 88%
+        );
+    animation:bottlePulse 2.5s ease-in-out infinite;
+}
+
+.process-bottle:before{
+    content:"";
+    position:absolute;
+    top:-18px;
+    left:14px;
+    width:21px;
+    height:20px;
+    background:#9d6510;
+    border-radius:4px;
+}
+
+@keyframes bottlePulse{
+    50%{transform:translateY(-8px)}
+}
+
+.process-label{
+    position:absolute;
+    left:50%;
+    top:25px;
+    transform:translateX(-50%);
+    padding:8px 14px;
+    background:rgba(0,0,0,.45);
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:#e9f3ec;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.process-step{
+    position:absolute;
+    bottom:25px;
+    padding:8px 10px;
+    border-radius:9px;
+    background:rgba(0,0,0,.42);
+    color:#c7d4cc;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+.step1{left:7%}
+.step2{left:29%}
+.step3{left:51%}
+.step4{right:5%}
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.timeline{
+    display:grid;
+    gap:0;
+}
+
+.timeline-item{
+    position:relative;
+    padding:17px 0 17px 38px;
+    border-left:1px solid rgba(255,255,255,.12);
+}
+
+.timeline-item:before{
+    content:"";
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    left:-5px;
+    top:23px;
+    background:var(--gold);
+    box-shadow:0 0 15px rgba(255,201,40,.5);
+}
+
+.timeline-item h4{
+    font-size:12px;
+}
+
+.timeline-item p{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.6;
+    margin-top:4px;
+}
+
+.timeline-item time{
+    color:#7d9185;
+    font-size:9px;
+}
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+.chart{
+    height:210px;
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:100% 42px;
+}
+
+.chart-line{
+    position:absolute;
+    inset:15px;
+}
+
+.chart-svg{
+    width:100%;
+    height:100%;
+    overflow:visible;
+}
+
+.chart-grid{
+    stroke:rgba(255,255,255,.06);
+    stroke-width:1;
+}
+
+.chart-path{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    filter:drop-shadow(0 0 7px rgba(255,201,40,.35));
+}
+
+.chart-fill{
+    fill:url(#chartGradient);
+    opacity:.17;
+}
+
+.chart-point{
+    fill:var(--gold2);
+    filter:drop-shadow(0 0 7px var(--gold));
+}
+
+/* =========================================================
+   FEATURE CARDS
+   ========================================================= */
+
+.features{
+    margin-top:55px;
+}
+
+.section-heading{
+    margin-bottom:22px;
+}
+
+.section-heading span{
+    color:var(--gold2);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.section-heading h2{
+    margin-top:8px;
+    font-size:34px;
+    letter-spacing:-1px;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.feature{
+    padding:24px;
+    min-height:185px;
+    border-radius:21px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.feature:hover{
+    transform:translateY(-6px);
+    border-color:rgba(255,201,40,.25);
+    background:rgba(255,255,255,.055);
+}
+
+.feature-icon{
+    font-size:28px;
+}
+
+.feature h3{
+    margin-top:16px;
+    font-size:14px;
+}
+
+.feature p{
+    color:var(--muted);
+    line-height:1.6;
+    margin-top:8px;
+    font-size:11px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+    margin-top:70px;
+    border-top:1px solid var(--line);
+    padding:30px 0 10px;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:#718177;
+    font-size:10px;
+}
+
+footer strong{
+    color:#aab8af;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:9990;
+    width:min(380px,calc(100vw - 44px));
+    padding:15px 17px;
+    border:1px solid var(--line);
+    background:rgba(7,17,11,.94);
+    backdrop-filter:blur(18px);
+    border-radius:15px;
+    box-shadow:var(--shadow);
+    transform:translateY(130%);
+    transition:.35s;
+}
+
+.toast.show{
+    transform:none;
+}
+
+.toast strong{
+    display:block;
+    font-size:12px;
+}
+
+.toast span{
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+    margin-top:4px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:1200px){
+    .metrics{
+        grid-template-columns:repeat(3,1fr);
     }
 
-    .quality-grid {
-        grid-template-columns: 1fr;
+    .consumer-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .header h1 {
-        font-size: 25px;
+    .feature-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:900px){
+    .hero{
+        grid-template-columns:1fr;
+        padding-top:45px;
+    }
+
+    .hero-visual{
+        min-height:430px;
+    }
+
+    .portal-grid,
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .metrics{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-top{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+@media(max-width:620px){
+    main{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .nav{
+        padding:0 15px;
+    }
+
+    .nav-status{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:53px;
+        letter-spacing:-3px;
+    }
+
+    .hero p{
+        font-size:14px;
+    }
+
+    .portal-card{
+        padding:25px;
+    }
+
+    .metrics,
+    .consumer-grid,
+    .feature-grid,
+    .telemetry-grid{
+        grid-template-columns:1fr;
+    }
+
+    .verification-row{
+        flex-direction:column;
+    }
+    
+    /* FOOTER SPACING FIX */
+
+.hc-footer{
+    width:100%;
+    margin-top:70px;
+    padding:45px 6% 30px;
+    border-top:1px solid var(--line);
+    box-sizing:border-box;
+}
+
+.hc-footer-main{
+    display:block;
+    margin-bottom:35px;
+}
+
+.hc-footer-brand{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:22px;
+}
+
+.hc-footer-description{
+    max-width:850px;
+    line-height:1.9;
+    margin-top:15px;
+}
+
+.hc-footer-line{
+    width:100%;
+    height:1px;
+    margin:32px 0 40px;
+    background:var(--line);
+}
+
+/* FOUR FOOTER SECTIONS */
+
+.hc-footer-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    column-gap:55px;
+    row-gap:45px;
+    width:100%;
+}
+
+.hc-footer-column{
+    width:100%;
+}
+
+.hc-footer-column h4{
+    margin:0 0 20px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+    color:var(--gold2);
+    font-size:10px;
+    line-height:1.5;
+    letter-spacing:1.5px;
+}
+
+/* THIS IS THE IMPORTANT PART */
+
+.hc-footer-column span{
+    display:block !important;
+    width:100%;
+    margin:0 0 14px !important;
+    padding:0;
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.8 !important;
+    letter-spacing:.3px;
+    white-space:normal;
+}
+
+/* SYSTEM ARCHITECTURE */
+
+.hc-footer-system{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:35px;
+    width:100%;
+    margin-top:45px;
+    padding:22px 25px;
+    box-sizing:border-box;
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:rgba(255,255,255,.025);
+}
+
+.hc-footer-system-label{
+    display:block;
+    margin-bottom:9px;
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.5;
+    letter-spacing:1.5px;
+}
+
+.hc-footer-system strong{
+    display:block;
+    font-size:10px;
+    line-height:1.8;
+    letter-spacing:.8px;
+}
+
+.hc-footer-status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    white-space:nowrap;
+    font-size:9px;
+    line-height:1.6;
+}
+
+/* BOTTOM FOOTER */
+
+.hc-footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+    width:100%;
+    margin-top:30px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    color:#718078;
+    font-size:8px;
+    line-height:1.8;
+    letter-spacing:1px;
+}
+
+@media(max-width:950px){
+
+    .hc-footer-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        column-gap:40px;
+        row-gap:40px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hc-footer{
+        padding:35px 22px 25px;
+    }
+
+    .hc-footer-grid{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .hc-footer-system{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .hc-footer-status{
+        white-space:normal;
+    }
+
+    .hc-footer-bottom{
+        flex-direction:column;
+        gap:10px;
+    }
+
+}
+
+@media(max-width:1000px){
+
+    .footer-flow{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .flow-arrow{
+        display:none;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .honeychain-footer{
+        margin-top:50px;
+        padding:40px 22px 25px;
+    }
+
+    .footer-top{
+        flex-direction:column;
+        gap:22px;
+    }
+
+    .footer-tagline{
+        max-width:100%;
+        padding:0;
+        text-align:left;
+    }
+
+    .footer-divider{
+        margin:30px 0;
+    }
+
+    .footer-flow{
+        grid-template-columns:1fr;
+        gap:12px;
+        margin-top:32px;
+    }
+
+    .footer-flow-item{
+        padding:18px;
+    }
+
+    .footer-tech{
+        margin-top:30px;
+        padding:20px 16px;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:9px;
+    }
+
+}
+
+    .process-stage{
+        min-height:370px;
+    }
+
+    .hive{
+        left:5%;
+        transform:scale(.75);
+        transform-origin:bottom left;
+    }
+
+    .process-machine{
+        right:3%;
+        transform:scale(.75);
+        transform-origin:bottom right;
+    }
+
+    .process-bottle{
+        right:39%;
+        transform:scale(.75);
+        transform-origin:bottom center;
+    }
+
+    .step1{left:3%}
+    .step2{left:26%}
+    .step3{left:50%}
+    .step4{right:2%}
+
+    footer{
+        flex-direction:column;
     }
 }
 </style>
 </head>
 
-
 <body>
+<div style="height:20px;"> </div>
+            <div style="width:100%; display:flex; justify-content:center; align-items:center;">
+    <img
+        src="logo.png"
+        draggable="false"
+        oncontextmenu="return false;"
+        ondragstart="return false;"
+        onselectstart="return false;"
+        style="
+            width:100px;
+            height:100px;
+            object-fit:contain;
+            border-radius:50%;
+            background:white;
+            box-shadow:0 0 20px rgba(16,185,129,0.5);
+            display:block;
+        ">
+</div>
+<div style="height:20px;"> </div>
+<div class="background-grid"></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
 
-<div class="container">
+<!-- =======================================================
+     BOOT SCREEN
+     ======================================================= -->
 
+<div class="boot" id="boot">
+    <div class="honey-logo"></div>
+    <div class="boot-title">THE HONEY BLOCK CHAIN</div>
+    <div class="boot-sub">TRUST • TRACE • TRANSPARENCY</div>
+    <div class="boot-line"><span></span></div>
+</div>
 
-<!-- =====================================================
+<!-- =======================================================
      HEADER
-===================================================== -->
+     ======================================================= -->
 
-<div class="header">
-
-    <div class="logo">🍯</div>
-
-    <h1>HONEY CHAIN SYSTEM</h1>
-
-    <p>
-        Consumer Honey Traceability & Verification Portal
-    </p>
-
-</div>
-
-
-<!-- =====================================================
-     AUTHENTICITY / VERIFICATION
-===================================================== -->
-
-<div class="verification">
-
-    <div class="verified">
-        ✓ BATCH RECORD VERIFIED
-    </div>
-
-    <div class="batch-id">
-        Batch ID: HNY-2026-A001
-    </div>
-
-    <p style="margin-top:10px;color:#666;">
-        This page provides the available traceability and monitoring
-        information associated with this honey batch.
-    </p>
-
-</div>
-
-
-<!-- =====================================================
-     PRODUCT INFORMATION
-===================================================== -->
-
-<div class="section">
-
-    <h2>🍯 Product Information</h2>
-
-    <div class="row">
-        <div class="label">Product</div>
-        <div class="value">Honey</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Honey Type</div>
-        <div class="value">Multifloral Honey</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Batch ID</div>
-        <div class="value">HNY-2026-A001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Net Quantity</div>
-        <div class="value">500 g</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Container Status</div>
-        <div class="value">
-            <span class="status">Sealed</span>
+<header>
+    <nav class="nav">
+        <div class="brand">
+            <div class="brand-mark">💤</div>
+            <div>
+            <ultra>🐝</ultra>
+                HONEY BLOCK CHAIN NETWORK ⛓️ 
+                <small>🐝</small>
+            </div>
         </div>
-    </div>
 
-</div>
-
-
-<!-- =====================================================
-     ORIGIN
-===================================================== -->
-
-<div class="section">
-
-    <h2>🐝 Origin & Beekeeper Information</h2>
-
-    <div class="row">
-        <div class="label">Beekeeper ID</div>
-        <div class="value">BK-001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Apiary ID</div>
-        <div class="value">APIARY-001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Apiary Status</div>
-        <div class="value">Registered Apiary</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Production Origin</div>
-        <div class="value">
-            Registered Honey Production Site
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            <span id="networkStatus">LIVE</span>
         </div>
-    </div>
+    </nav>
+</header>
 
-</div>
+<main>
 
+<!-- =======================================================
+     LANDING
+     ======================================================= -->
 
-<!-- =====================================================
-     HARVEST
-===================================================== -->
+<section class="hero" id="landing">
 
-<div class="section">
+    <div class="hero-copy">
 
-    <h2>🌼 Harvest Information</h2>
-
-    <div class="row">
-        <div class="label">Harvest Date</div>
-        <div class="value">02 September 2026</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Extraction Method</div>
-        <div class="value">
-            Controlled Honey Extraction
+        <div class="eyebrow">
+            <span>◆</span>
+            Advanced Honey Intelligence Platform
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Initial Batch Quantity</div>
-        <div class="value">25.00 kg</div>
-    </div>
+        <h1>
+            FROM THE <span>HIVE</span><br>
+            TO THE <span>HOME</span>.<br>
+            FULLY VERIFIED 🎖️.
+        </h1>
 
-</div>
+        <p>
+            A digital traceability architecture connecting
+            beekeepers, processing facilities, distributors,
+            retailers and consumers through batch identity,
+            IOT monitoring, GPS logistics, recorded events
+            and a blockchain-style evidence chain.
+        </p>
 
+        <div class="hero-actions">
+            <button class="primary-btn" onclick="openChainLogin()">
+                🔐 CHAIN PORTAL 🔐
+            </button>
 
-<!-- =====================================================
-     PROCESSING
-===================================================== -->
-
-<div class="section">
-
-    <h2>🏭 Processing Information</h2>
-
-    <div class="row">
-        <div class="label">Processing Unit</div>
-        <div class="value">PU-001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Processing Date</div>
-        <div class="value">03 September 2026</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Filtration</div>
-        <div class="value">
-            <span class="status">Completed</span>
+            <button class="secondary-btn" onclick="openConsumerPortal()">
+                🍯 CONSUMER PORTAL 🍯
+            </button>
         </div>
+
     </div>
 
-    <div class="row">
-        <div class="label">Processing Status</div>
-        <div class="value">
-            <span class="status">Completed</span>
-        </div>
-    </div>
+    <div class="hero-visual">
 
-</div>
+        <div class="honey-orbit">
 
+            <div class="orbit-center">
+                <span>🍯</span>
+            </div>
 
-<!-- =====================================================
-     PACKAGING
-===================================================== -->
-
-<div class="section">
-
-    <h2>🫙 Packaging Information</h2>
-
-    <div class="row">
-        <div class="label">Packaging Unit</div>
-        <div class="value">PKG-001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Packaging Date</div>
-        <div class="value">04 September 2026</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Packaged Quantity</div>
-        <div class="value">500 g</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Seal Status</div>
-        <div class="value">
-            <span class="status">Sealed</span>
-        </div>
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     QUALITY MONITORING
-===================================================== -->
-
-<div class="section">
-
-    <h2>🔬 Quality Monitoring</h2>
-
-    <div class="quality-grid">
-
-        <div class="quality-card">
-
-            <h3>🌡 Temperature</h3>
-
-            <p>
-                Recorded temperature:
-                <strong>24 °C</strong>
-            </p>
-
-            <p>
-                Monitoring status:
-                <strong>Within monitored parameters</strong>
-            </p>
+            <div class="orbit-node"><b>🐝</b></div>
+            <div class="orbit-node"><b>🌡️</b></div>
+            <div class="orbit-node"><b>📍</b></div>
+            <div class="orbit-node"><b>🔗</b></div>
+            <div class="orbit-node"><b>🧪</b></div>
+            <div class="orbit-node"><b>📦</b></div>
 
         </div>
 
+    </div>
 
-        <div class="quality-card">
+</section>
 
-            <h3>💧 Humidity</h3>
+<!-- =======================================================
+     PORTAL SELECTION
+     ======================================================= -->
+
+<section class="portal-section">
+
+    <div class="section-heading">
+        <span>Secure dual experience</span>
+        <h2>Choose how you want to explore the PORTAL as :</h2>
+    </div>
+
+    <div class="portal-grid">
+
+        <article class="portal-card chain" id="chainPortalCard">
+
+            <div class="portal-icon">🛰️</div>
+
+            <h2>Company / Distributor / Retailer / Government</h2>
 
             <p>
-                Recorded humidity:
-                <strong>55 %</strong>
+                Secure operational control center with live
+                GPS navigation, second-by-second IOT telemetry,
+                batch monitoring, logistics status, alerts,
+                supply-chain records and blockchain evidence.
             </p>
 
+            <div class="portal-tags">
+                <span class="tag">LIVE GPS NAVIGATION</span>
+                <span class="tag">LIVE IOT DATA</span>
+                <span class="tag">10 – BATCHES</span>
+                <span class="tag">COMPLETE BLOCKCHAIN</span>
+                <span class="tag">HIGH ALERTS</span>
+            </div>
+
+            <button
+                class="primary-btn"
+                style="margin-top:22px"
+                onclick="openChainLogin()"
+                id="chainOpenButton">
+                Enter to the Chain Portal
+            </button>
+
+        </article>
+
+        <article class="portal-card consumer" id="consumerPortalCard">
+
+            <div class="portal-icon">🍯</div>
+
+            <h2>Consumer Verification</h2>
+
             <p>
-                Monitoring status:
-                <strong>Within monitored parameters</strong>
+                Enter the batch ID printed on the honey bottle.
+                After verification, see the latest recorded
+                information available for that batch, including
+                origin, processing, quality records, dispatch,
+                logistics and recorded locations.
             </p>
+
+            <div class="portal-tags">
+                <span class="tag">NO PHONE NUMBER REQUIRED</span>
+                <span class="tag">NO PERSONAL DETAILS REQUIRED</span>
+                <span class="tag">BATCH VERIFICATION</span>
+                <span class="tag">LAST RECORDED DATA</span>
+                <span class="tag">TRACEABILITY</span>
+            </div>
+
+            <button
+                class="secondary-btn"
+                style="margin-top:22px"
+                onclick="openConsumerPortal()"
+                id="consumerOpenButton">
+                Verify My Honey Batch ID Number 
+            </button>
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     CHAIN LOGIN MODAL
+     ======================================================= -->
+
+<div class="modal" id="chainModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <div>
+                <h2>Chain Network Login</h2>
+                <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                    COMPANY / DISTRIBUTOR / RETAILER / GOVERNMENT ACCESS 
+                </p>
+            </div>
+
+            <button class="close" onclick="closeModal('chainModal')">
+                ❌
+            </button>
 
         </div>
 
-
-        <div class="quality-card">
-
-            <h3>⚖ Weight</h3>
-
-            <p>
-                Recorded packaged weight:
-                <strong>500 g</strong>
-            </p>
-
-            <p>
-                Monitoring status:
-                <strong>Recorded</strong>
-            </p>
-
+        <div class="field">
+            <label>LOGIN ID</label>
+            <input
+                id="chainId"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="Enter ID">
         </div>
 
-
-        <div class="quality-card">
-
-            <h3>🎨 Colour</h3>
-
-            <p>
-                Colour monitoring:
-                <strong>Normal</strong>
-            </p>
-
-            <p>
-                Status:
-                <strong>Within monitored range</strong>
-            </p>
-
+        <div class="field">
+            <label>PASSCODE</label>
+            <input
+                id="chainpasscode"
+                type="passcode"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="Enter passcode">
         </div>
 
-
-        <div class="quality-card">
-
-            <h3>🧪 pH</h3>
-
-            <p>
-                Recorded pH:
-                <strong>4.2</strong>
-            </p>
-
-            <p>
-                Status:
-                <strong>Recorded for monitoring</strong>
-            </p>
-
+        <div class="field">
+            <label>ROLE</label>
+            <select id="chainRole">
+                <option value="Company">COMPANY</option>
+                <option value="Distributor">DISTRIBUTOR</option>
+                <option value="Retailer">RETAILER</option>
+                <option value="Retailer">GOVERNMENT</option>
+            </select>
         </div>
 
-
-        <div class="quality-card">
-
-            <h3>🧼 Hygiene</h3>
-
-            <p>
-                Hygiene monitoring:
-                <strong>Active</strong>
-            </p>
-
-            <p>
-                Processing hygiene record:
-                <strong>Recorded</strong>
-            </p>
-
+        <div class="modal-message" id="chainMessage">
+            SECURE OPERATIONAL ACCESS.
         </div>
+
+        <button class="primary-btn modal-submit" onclick="chainLogin()">
+            🔐 AUTHENTICATE & OPEN LIVE NETWORK 🔐
+        </button>
 
     </div>
 
 </div>
 
+<!-- =======================================================
+     CONSUMER LOGIN / VERIFICATION MODAL
+     ======================================================= -->
 
-<!-- =====================================================
-     STORAGE
-===================================================== -->
+<div class="modal" id="consumerModal">
 
-<div class="section">
+    <div class="modal-box">
 
-    <h2>🏢 Storage Information</h2>
+        <div class="modal-head">
 
-    <div class="row">
-        <div class="label">Warehouse</div>
-        <div class="value">WH-001</div>
+            <div>
+                <h2>Consumer Verification</h2>
+                <p style="color:var(--muted);font-size:11px;margin-top:5px">
+                    NO passcode OR ACCOUNT REQUIRED
+                </p>
+            </div>
+
+            <button class="close" onclick="closeModal('consumerModal')">
+                ❌
+            </button>
+
+        </div>
+
+        <div class="field">
+
+            <label>BATCH ID IS PRINTED ON YOUR BOTTLE.</label>
+
+            <input
+                id="consumerBatch"
+                type="text"
+                autocomplete="off"
+                placeholder="HC-2026-001">
+
+        </div>
+
+        <div class="modal-message" id="consumerMessage">
+            Enter a valid batch ID to unlock recorded traceability information.
+        </div>
+
+        <button class="primary-btn modal-submit" onclick="consumerVerify()">
+            🍯 VERIFY BATCH NUMBER 🍯
+        </button>
+
     </div>
 
-    <div class="row">
-        <div class="label">Temperature Monitoring</div>
-        <div class="value">24 °C</div>
+</div>
+
+<!-- =======================================================
+     CHAIN DASHBOARD
+     ======================================================= -->
+
+<section class="dashboard" id="chainDashboard">
+
+    <div class="dashboard-top">
+
+        <div>
+            <div class="live-pill">
+                <span class="live-dot"></span>
+                LIVE NETWORK • SECOND-BY-SECOND
+            </div>
+
+            <h2>Operations Intelligence Center</h2>
+
+            <p id="chainWelcome">
+                Live logistics and IOT monitoring
+            </p>
+        </div>
+
+        <button
+            class="secondary-btn"
+            onclick="logoutToLanding()">
+            EXIT PORTAL SERVICES 
+        </button>
+
     </div>
 
-    <div class="row">
-        <div class="label">Humidity Monitoring</div>
-        <div class="value">55 %</div>
+    <!-- METRICS -->
+
+    <div class="metrics">
+
+        <div class="metric">
+            <div class="metric-label">Active Batches</div>
+            <div class="metric-value">10</div>
+            <div class="metric-foot">Continuous monitoring</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">Live Vehicles</div>
+            <div class="metric-value" id="vehicleMetric">10</div>
+            <div class="metric-foot">GPS telemetry</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">IOT Signals</div>
+            <div class="metric-value" id="IOTMetric">40</div>
+            <div class="metric-foot">Updating continuously</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">Network Health</div>
+            <div class="metric-value good">99.9%</div>
+            <div class="metric-foot">System availability</div>
+        </div>
+
+        <div class="metric">
+            <div class="metric-label">Ledger Status</div>
+            <div class="metric-value good">VALID</div>
+            <div class="metric-foot">Hash-linked records</div>
+        </div>
+
     </div>
 
-    <div class="row">
-        <div class="label">Storage Status</div>
-        <div class="value">
-            <span class="status">
-                Within monitored parameters
+    <!-- MAIN LIVE AREA -->
+
+    <div class="dashboard-grid">
+
+        <!-- BATCH TABLE -->
+
+        <div class="panel">
+
+            <div class="panel-head">
+                <h3>🛰️ Live Batch Fleet</h3>
+                <span id="lastLiveUpdate">
+                    Waiting for telemetry...
+                </span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="table-wrap">
+
+                    <table class="batch-table">
+
+                        <thead>
+                            <tr>
+                                <th>Batch</th>
+                                <th>Stage</th>
+                                <th>Temperature</th>
+                                <th>Humidity</th>
+                                <th>GPS</th>
+                                <th>Signal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="liveBatchTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MAP -->
+
+        <div class="panel">
+
+            <div class="panel-head">
+                <h3>📍 Live GPS Navigation</h3>
+                <span>🔄 Auto-refresh 🔄</span>
+            </div>
+
+            <div class="map">
+
+                <div class="map-label">
+                    LIVE LOGISTICS MAP • SIMULATED GPS FEED
+                </div>
+
+                <div class="route"></div>
+                <div class="route2"></div>
+
+                <div class="gps-node n1"></div>
+                <div class="gps-node n2"></div>
+                <div class="gps-node n3"></div>
+                <div class="gps-node n4"></div>
+                <div class="gps-node n5"></div>
+
+                <div class="vehicle" id="vehicle"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SENSOR + BLOCKCHAIN -->
+
+    <div class="dashboard-grid">
+
+        <div class="panel">
+
+            <div class="panel-head">
+                <h3>🌡️ Live IOT Telemetry</h3>
+                <span id="selectedTelemetry">Fleet aggregate</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="telemetry-grid">
+
+                    <div class="sensor-card">
+                        <div class="sensor-top">
+                            <span>Temperature</span>
+                            <span>°C</span>
+                        </div>
+                        <div class="sensor-value" id="liveTemp">24.6</div>
+                        <div class="sensor-bar">
+                            <span id="tempBar"></span>
+                        </div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-top">
+                            <span>Humidity</span>
+                            <span>%RH</span>
+                        </div>
+                        <div class="sensor-value" id="liveHumidity">58.2</div>
+                        <div class="sensor-bar">
+                            <span id="humidityBar"></span>
+                        </div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-top">
+                            <span>Container Vibration</span>
+                            <span>g</span>
+                        </div>
+                        <div class="sensor-value" id="liveVibration">0.11</div>
+                        <div class="sensor-bar">
+                            <span id="vibrationBar"></span>
+                        </div>
+                    </div>
+
+                    <div class="sensor-card">
+                        <div class="sensor-top">
+                            <span>Light Exposure</span>
+                            <span>lux</span>
+                        </div>
+                        <div class="sensor-value" id="liveLight">112</div>
+                        <div class="sensor-bar">
+                            <span id="lightBar"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-head">
+                <h3>🔗 Blockchain Evidence Chain</h3>
+                <span id="ledgerState">VALID</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="chain-list" id="chainList"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LIVE CHART -->
+
+    <div class="panel" style="margin-top:18px">
+
+        <div class="panel-head">
+            <h3>📈 Live Environmental Signal</h3>
+            <span>Rolling 30-second window</span>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="chart">
+
+                <div class="chart-line">
+
+                    <svg
+                        class="chart-svg"
+                        viewBox="0 0 800 180"
+                        preserveAspectRatio="none">
+
+                        <defs>
+                            <linearGradient
+                                id="chartGradient"
+                                x1="0"
+                                x2="0"
+                                y1="0"
+                                y2="1">
+                                <stop
+                                    offset="0"
+                                    stop-color="#ffc928"
+                                    stop-opacity=".8"/>
+                                <stop
+                                    offset="1"
+                                    stop-color="#ffc928"
+                                    stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+
+                        <path
+                            class="chart-grid"
+                            d="M0 40H800 M0 90H800 M0 140H800"
+                            fill="none"/>
+
+                        <path
+                            class="chart-fill"
+                            id="chartFill"
+                            d=""></path>
+
+                        <path
+                            class="chart-path"
+                            id="chartPath"
+                            d=""></path>
+
+                        <g id="chartPoints"></g>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- EVENT TIMELINE -->
+
+    <div class="dashboard-grid">
+
+        <div class="panel">
+
+            <div class="panel-head">
+                <h3>⚡ Live Event Stream</h3>
+                <span>Network events</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div
+                    class="timeline"
+                    id="liveEvents"></div>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-head">
+                <h3>🛡️ Intelligent Risk Monitor</h3>
+                <span>Automated assessment</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="sensor-card">
+                    <div class="sensor-top">
+                        <span>Temperature integrity</span>
+                        <span class="good">NORMAL</span>
+                    </div>
+                    <div class="sensor-value">SAFE</div>
+                    <div class="sensor-bar">
+                        <span style="width:86%"></span>
+                    </div>
+                </div>
+
+                <div class="sensor-card" style="margin-top:12px">
+                    <div class="sensor-top">
+                        <span>GPS continuity</span>
+                        <span class="good">CONNECTED</span>
+                    </div>
+                    <div class="sensor-value">100%</div>
+                    <div class="sensor-bar">
+                        <span style="width:100%"></span>
+                    </div>
+                </div>
+
+                <div class="sensor-card" style="margin-top:12px">
+                    <div class="sensor-top">
+                        <span>Sensor integrity</span>
+                        <span class="good">VALID</span>
+                    </div>
+                    <div class="sensor-value">99.7%</div>
+                    <div class="sensor-bar">
+                        <span style="width:99.7%"></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     CONSUMER DASHBOARD
+     ======================================================= -->
+
+<section class="dashboard" id="consumerDashboard">
+
+    <div class="dashboard-top">
+
+        <div>
+            <div class="live-pill"
+                 style="
+                 color:#ffdc70;
+                 background:rgba(255,201,40,.07);
+                 border-color:rgba(255,201,40,.2)">
+                🍯 VERIFIED PRODUCT VIEW 🍯
+            </div>
+
+            <h2>Your Honey Story</h2>
+
+            <p>
+                Latest recorded traceability information —
+                not a live operational feed.
+            </p>
+        </div>
+
+        <button
+            class="secondary-btn"
+            onclick="logoutToLanding()">
+            Exit Verification
+        </button>
+
+    </div>
+
+    <div class="consumer-hero">
+
+        <div class="eyebrow">
+            BATCH AUTHENTICITY CHECK
+        </div>
+
+        <h2 style="font-size:38px;margin-top:18px">
+            Verify the journey behind your bottle.
+        </h2>
+
+        <p style="
+            color:var(--muted);
+            max-width:750px;
+            line-height:1.8;
+            margin-top:12px">
+            Enter the batch identifier printed on the bottle.
+            The system reveals the latest recorded evidence
+            available for that exact batch.
+        </p>
+
+        <div class="verification-row">
+
+            <input
+                id="consumerBatchMain"
+                placeholder="Enter batch ID HC-2026-001">
+
+            <button
+                class="primary-btn"
+                onclick="consumerVerifyMain()">
+                Verify Batch
+            </button>
+
+        </div>
+
+        <div
+            class="consumer-status"
+            id="consumerMainStatus">
+            No batch verified.
+        </div>
+
+        <div class="trust-score">
+
+            <div class="score-ring">
+                <span id="trustScore">—</span>
+            </div>
+
+            <div>
+                <h3>Traceability Confidence</h3>
+                <p style="
+                    color:var(--muted);
+                    margin-top:5px;
+                    font-size:12px;
+                    line-height:1.6">
+                    Based on the completeness of recorded
+                    supply-chain, quality and logistics data.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        class="consumer-data"
+        id="consumerData">
+
+        <div class="section-heading"
+             style="margin-top:35px">
+            <span id="consumerBatchHeading">
+                VERIFIED BATCH
+            </span>
+            <h2 id="consumerHoneyName">
+                Honey Batch
+            </h2>
+
+            <span
+                class="last-record"
+                id="lastRecordedLabel">
+                LAST RECORDED SNAPSHOT
             </span>
         </div>
-    </div>
 
-</div>
+        <div class="consumer-grid">
 
+            <div class="info-card">
+                <div class="icon">🐝</div>
+                <h4>Origin</h4>
+                <strong id="cOrigin">—</strong>
+                <small id="cApiary">—</small>
+            </div>
 
-<!-- =====================================================
-     TRANSPORTATION
-===================================================== -->
+            <div class="info-card">
+                <div class="icon">🌼</div>
+                <h4>Floral Source</h4>
+                <strong id="cFloral">—</strong>
+                <small>Recorded source information</small>
+            </div>
 
-<div class="section">
+            <div class="info-card">
+                <div class="icon">⚖️</div>
+                <h4>Net Quantity</h4>
+                <strong id="cWeight">—</strong>
+                <small>Declared batch quantity</small>
+            </div>
 
-    <h2>🚚 Transportation Information</h2>
+            <div class="info-card">
+                <div class="icon">📅</div>
+                <h4>Harvest</h4>
+                <strong id="cHarvest">—</strong>
+                <small>Recorded harvest date</small>
+            </div>
 
-    <div class="row">
-        <div class="label">Transport ID</div>
-        <div class="value">TR-001</div>
-    </div>
+            <div class="info-card">
+                <div class="icon">🧪</div>
+                <h4>Quality Record</h4>
+                <strong id="cQuality">—</strong>
+                <small id="cQualityDetail">—</small>
+            </div>
 
-    <div class="row">
-        <div class="label">Location Monitoring</div>
-        <div class="value">
-            GPS-enabled
+            <div class="info-card">
+                <div class="icon">🏭</div>
+                <h4>Processing</h4>
+                <strong id="cProcessing">—</strong>
+                <small id="cProcessingDate">—</small>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">🚚</div>
+                <h4>Dispatch</h4>
+                <strong id="cDispatch">—</strong>
+                <small id="cDispatchDate">—</small>
+            </div>
+
+            <div class="info-card">
+                <div class="icon">📍</div>
+                <h4>Last Recorded Location</h4>
+                <strong id="cLocation">—</strong>
+                <small id="cCoordinates">—</small>
+            </div>
+
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Transport Status</div>
-        <div class="value">
-            In Transit
+        <!-- LAST RECORDED IOT DETAILS FOR CONSUMER -->
+        <div class="panel" style="margin-top:20px">
+            <div class="panel-head">
+                <h3>📡 Last Recorded IOT Details</h3>
+                <span id="consumerIOTRecordedAt">—</span>
+            </div>
+
+            <div class="panel-body">
+                <div class="consumer-grid">
+                    <div class="info-card">
+                        <div class="icon">🌡️</div>
+                        <h4>Temperature</h4>
+                        <strong id="cIOTTemperature">—</strong>
+                        <small>Last recorded sensor value</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">💧</div>
+                        <h4>Humidity</h4>
+                        <strong id="cIOTHumidity">—</strong>
+                        <small>Last recorded sensor value</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">📳</div>
+                        <h4>Container Vibration</h4>
+                        <strong id="cIOTVibration">—</strong>
+                        <small>Last recorded sensor value</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">💡</div>
+                        <h4>Light Exposure</h4>
+                        <strong id="cIOTLight">—</strong>
+                        <small>Last recorded sensor value</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">🚚</div>
+                        <h4>Transport Speed</h4>
+                        <strong id="cIOTSpeed">—</strong>
+                        <small>Last recorded sensor value</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">🔋</div>
+                        <h4>Sensor Battery</h4>
+                        <strong id="cIOTBattery">—</strong>
+                        <small>Last recorded device status</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">📶</div>
+                        <h4>Signal Strength</h4>
+                        <strong id="cIOTSignal">—</strong>
+                        <small>Last recorded device status</small>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon">🛰️</div>
+                        <h4>Recorded GPS</h4>
+                        <strong id="cIOTGPS">—</strong>
+                        <small>Last recorded coordinates</small>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Route Monitoring</div>
-        <div class="value">
-            Enabled
+        <!-- CONSUMER PROCESS ANIMATION -->
+
+        <div class="process-section">
+
+            <div class="section-heading">
+                <span>Knowledge experience</span>
+                <h2>From beekeeper to your bottle</h2>
+            </div>
+
+            <div class="process-stage">
+
+                <div class="process-sun"></div>
+
+                <div class="cloud"></div>
+                <div class="cloud two"></div>
+
+                <div class="process-label">
+                    🍯 TRACEABILITY JOURNEY
+                </div>
+
+                <div class="hive"></div>
+
+                <div class="bee one"></div>
+                <div class="bee two"></div>
+                <div class="bee three"></div>
+
+                <div class="process-machine"></div>
+
+                <div class="process-bottle"></div>
+
+                <div class="process-ground"></div>
+
+                <div class="process-step step1">
+                    01 • Beekeeping
+                </div>
+
+                <div class="process-step step2">
+                    02 • Harvest
+                </div>
+
+                <div class="process-step step3">
+                    03 • Processing
+                </div>
+
+                <div class="process-step step4">
+                    04 • Bottle
+                </div>
+
+            </div>
+
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Environmental Monitoring</div>
-        <div class="value">
-            Active
+        <!-- CONSUMER TIMELINE -->
+
+        <div class="dashboard-grid">
+
+            <div class="panel">
+
+                <div class="panel-head">
+                    <h3>📜 Recorded Batch Journey</h3>
+                    <span>Historical snapshot</span>
+                </div>
+
+                <div class="panel-body">
+
+                    <div
+                        class="timeline"
+                        id="consumerTimeline"></div>
+
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-head">
+                    <h3>🔐 Verification Ledger</h3>
+                    <span>Batch evidence</span>
+                </div>
+
+                <div class="panel-body">
+
+                    <div
+                        class="chain-list"
+                        id="consumerLedger"></div>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
 
-</div>
+</section>
 
+<!-- =======================================================
+     FEATURES
+     ======================================================= -->
 
-<!-- =====================================================
-     AI MONITORING
-===================================================== -->
+<section class="features">
 
-<div class="section">
-
-    <h2>🤖 AI-Based Monitoring</h2>
-
-    <div class="row">
-        <div class="label">AI Monitoring</div>
-        <div class="value">
-            <span class="status">Active</span>
-        </div>
+    <div class="section-heading">
+        <span>Platform architecture</span>
+        <h2>Designed beyond ordinary traceability</h2>
     </div>
 
-    <div class="row">
-        <div class="label">Parameters Analysed</div>
-        <div class="value">
-            Temperature, Humidity, Weight, Colour, pH
-            and Transportation Data
-        </div>
-    </div>
+    <div class="feature-grid">
 
-    <div class="row">
-        <div class="label">Anomaly Detection</div>
-        <div class="value">
-            No abnormal pattern detected
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="label">AI Assessment</div>
-        <div class="value">
-            <span class="status">Normal</span>
-        </div>
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     COMPLETE JOURNEY
-===================================================== -->
-
-<div class="section">
-
-    <h2>🔗 Complete Honey Journey</h2>
-
-    <div class="timeline">
-
-        <div class="timeline-item">
-            <h3>🐝 Beekeeper</h3>
+        <article class="feature">
+            <div class="feature-icon">🧬</div>
+            <h3>Unique Batch Identity</h3>
             <p>
-                Honey originated from a registered apiary
-                associated with the batch.
+                Every bottle can be associated with a batch
+                identity connecting origin, processing and
+                distribution records.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>🌼 Harvest</h3>
+        <article class="feature">
+            <div class="feature-icon">📍</div>
+            <h3>GPS Logistics</h3>
             <p>
-                Harvested on 02 September 2026 using
-                controlled honey extraction.
+                Operational users receive continuously changing
+                location telemetry for monitored shipments.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>🏭 Processing</h3>
+        <article class="feature">
+            <div class="feature-icon">📡</div>
+            <h3>IOT Monitoring</h3>
             <p>
-                Batch processed at processing unit PU-001.
-                Filtration completed.
+                Temperature, humidity, vibration and light
+                exposure can be monitored through a unified
+                telemetry layer.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>🫙 Packaging</h3>
+        <article class="feature">
+            <div class="feature-icon">🔗</div>
+            <h3>Hash-Linked Evidence</h3>
             <p>
-                Packaged on 04 September 2026 and
-                container sealed.
+                Recorded events are represented through
+                sequential cryptographic-style hashes to make
+                changes detectable.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>🏢 Storage</h3>
+        <article class="feature">
+            <div class="feature-icon">🧪</div>
+            <h3>Quality Records</h3>
             <p>
-                Batch stored under monitored temperature
-                and humidity conditions.
+                Quality-test information can be associated with
+                a batch without exposing operational-only
+                dashboards to consumers.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>🚚 Transportation</h3>
+        <article class="feature">
+            <div class="feature-icon">🛡️</div>
+            <h3>Role Separation</h3>
             <p>
-                Transportation and route monitoring
-                enabled.
+                Operational and consumer interfaces are separated
+                so each audience sees information appropriate
+                to its purpose.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>🏪 Retailer</h3>
+        <article class="feature">
+            <div class="feature-icon">📦</div>
+            <h3>Supply-Chain Events</h3>
             <p>
-                Batch received by the registered retailer
-                and verification completed.
+                Harvesting, collection, processing, packing,
+                dispatch, transport and retail events can form
+                a complete traceability story.
             </p>
-        </div>
+        </article>
 
-        <div class="timeline-item">
-            <h3>📱 Consumer</h3>
+        <article class="feature">
+            <div class="feature-icon">🎥</div>
+            <h3>Interactive Learning</h3>
             <p>
-                Consumer can verify the associated batch
-                record and traceability information.
+                The animated honey journey explains the process
+                from beekeeper to finished bottle without relying
+                on external video services.
             </p>
+        </article>
+
+        <article class="feature">
+            <div class="feature-icon">🚨</div>
+            <h3>Intelligent Alerts</h3>
+            <p>
+                Threshold monitoring can flag unusual sensor
+                values, GPS interruptions and other operational
+                conditions.
+            </p>
+        </article>
+
+        <article class="feature">
+            <div class="feature-icon">📊</div>
+            <h3>Live Analytics</h3>
+            <p>
+                Rolling telemetry visualization helps operational
+                users observe changing conditions over time.
+            </p>
+        </article>
+
+        <article class="feature">
+            <div class="feature-icon">🔎</div>
+            <h3>Consumer Transparency</h3>
+            <p>
+                A consumer only needs the batch identifier to
+                retrieve the latest recorded evidence.
+            </p>
+        </article>
+
+        <article class="feature">
+            <div class="feature-icon">⚙️</div>
+            <h3>Hardware Ready</h3>
+            <p>
+                The telemetry architecture can later be connected
+                to GPS trackers, temperature sensors and IOT
+                gateways through an API or backend.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+<footer class="hc-footer">
+
+    <div class="hc-footer-main">
+
+        <div class="hc-footer-brand">
+            <div class="hc-footer-mark">💤</div>
+
+            <div>
+                <strong>HONEYCHAIN</strong>
+                <span>INTELLIGENT HONEY TRACEABILITY SYSTEM</span>
+            </div>
+        </div>
+
+        <div class="hc-footer-description">
+            A DIGITAL TRACEABILITY ARCHITECTURE DESIGNED TO CONNECT
+            PRODUCT IDENTITY, SUPPLY-CHAIN EVENTS, ENVIRONMENTAL
+            TELEMETRY AND VERIFICATION DATA THROUGH A SINGLE
+            INFORMATION LAYER.
         </div>
 
     </div>
 
-</div>
+
+    <div class="hc-footer-line"></div>
 
 
-<!-- =====================================================
-     RETAILER VERIFICATION
-===================================================== -->
+    <div class="hc-footer-grid">
 
-<div class="section">
+        <div class="hc-footer-column">
+            <h4>TRACEABILITY CORE</h4>
 
-    <h2>🏪 Retailer Verification</h2>
-
-    <div class="row">
-        <div class="label">Retailer ID</div>
-        <div class="value">RET-001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Batch Received</div>
-        <div class="value">Yes</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Batch Verification</div>
-        <div class="value">
-            <span class="status">Successful</span>
+            <span>• DIGITAL BATCH IDENTITY</span>
+            <span>• ORIGIN RECORDS</span>
+            <span>• HARVEST EVENTS</span>
+            <span>• PROCESSING HISTORY</span>
+            <span>• DISTRIBUTION RECORDS</span>
         </div>
-    </div>
-
-</div>
 
 
-<!-- =====================================================
-     CONSUMER VERIFICATION
-===================================================== -->
+        <div class="hc-footer-column">
+            <h4>INTELLIGENCE LAYER</h4>
 
-<div class="section">
-
-    <h2>📱 Consumer Verification</h2>
-
-    <div class="row">
-        <div class="label">Batch Record</div>
-        <div class="value">Available</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Batch ID Status</div>
-        <div class="value">
-            <span class="status">Valid</span>
+            <span>• IOT TELEMETRY</span>
+            <span>• GPS LOCATION DATA</span>
+            <span>• ENVIRONMENTAL SIGNALS</span>
+            <span>• SENSOR CONDITION MONITORING</span>
+            <span>• EVENT ANALYTICS</span>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Traceability</div>
-        <div class="value">
-            <span class="status">Complete</span>
+
+        <div class="hc-footer-column">
+            <h4>VERIFICATION LAYER</h4>
+
+            <span>• HASH-LINKED EVIDENCE</span>
+            <span>• QUALITY RECORD ASSOCIATION</span>
+            <span>• DIGITAL EVENT HISTORY</span>
+            <span>• BATCH VERIFICATION</span>
+            <span>• CONSUMER DATA ACCESS</span>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Record Status</div>
-        <div class="value">
-            <span class="status">Verified</span>
+
+        <div class="hc-footer-column">
+            <h4>FUTURE CONNECTIVITY</h4>
+
+            <span>• API INTEGRATION</span>
+            <span>• BACKEND DATABASES</span>
+            <span>• PHYSICAL IOT GATEWAYS</span>
+            <span>• GPS TRACKING HARDWARE</span>
+            <span>• AUTOMATED DATA EXCHANGE</span>
         </div>
+
     </div>
 
-</div>
 
+    <div class="hc-footer-system">
 
-<!-- =====================================================
-     SECURITY
-===================================================== -->
-
-<div class="section">
-
-    <h2>🔐 Record Security</h2>
-
-    <div class="row">
-        <div class="label">Batch Authentication</div>
-        <div class="value">Enabled</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Access Control</div>
-        <div class="value">Enabled</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Data Protection</div>
-        <div class="value">Enabled</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Digital Record</div>
-        <div class="value">Protected</div>
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     FINAL CONSUMER SUMMARY
-===================================================== -->
-
-<div class="section">
-
-    <h2>✅ Consumer Summary</h2>
-
-    <div class="row">
-        <div class="label">Product</div>
-        <div class="value">Multifloral Honey</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Batch</div>
-        <div class="value">HNY-2026-A001</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Origin</div>
-        <div class="value">Registered Honey Production Site</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Processing</div>
-        <div class="value">Completed</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Packaging</div>
-        <div class="value">Sealed</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Environmental Monitoring</div>
-        <div class="value">Active</div>
-    </div>
-
-    <div class="row">
-        <div class="label">AI Monitoring</div>
-        <div class="value">No abnormal pattern detected</div>
-    </div>
-
-    <div class="row">
-        <div class="label">Traceability</div>
-        <div class="value">
-            <span class="status">Complete</span>
+        <div>
+            <span class="hc-footer-system-label">SYSTEM ARCHITECTURE</span>
+            <strong>DIGITAL IDENTITY → TELEMETRY → EVIDENCE → VERIFICATION</strong>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="label">Overall Batch Status</div>
-        <div class="value">
-            <span class="status">MONITORED BATCH</span>
+        <div class="hc-footer-status">
+            <span class="hc-status-dot"></span>
+            TRACEABILITY ENGINE READY
         </div>
+
     </div>
 
+
+    <div class="hc-footer-bottom">
+
+        <span>
+            HONEYCHAIN INTELLIGENT TRACEABILITY ARCHITECTURE
+        </span>
+
+        <span>
+            IOT • GPS • DIGITAL IDENTITY • DATA VERIFICATION
+        </span>
+
+    </div>
+
+</footer>
+
+</main>
+
+<div class="toast" id="toast">
+    <strong id="toastTitle">System</strong>
+    <span id="toastMessage">Ready.</span>
 </div>
 
+<script>
+/* =========================================================
+   HONEYCHAIN APPLICATION ENGINE
+   ========================================================= */
 
-<!-- =====================================================
-     IMPORTANT DISCLAIMER
-===================================================== -->
+"use strict";
 
-<div class="section">
+/* =========================================================
+   APPLICATION STATE
+   ========================================================= */
 
-    <h2>ℹ️ Consumer Information</h2>
+const APP = {
 
-    <p style="line-height:1.7;color:#555;">
+    mode: "none",
 
-        The information displayed on this page represents
-        the recorded traceability and monitoring information
-        associated with the batch.
+    chainAuthenticated: false,
 
-        IoT sensors and AI-based monitoring help identify
-        environmental changes and abnormal patterns.
-        They do not by themselves establish that honey is
-        completely free from adulteration, contaminants,
-        pathogens or other food-safety hazards.
+    consumerAuthenticated: false,
 
-        Definitive food-safety and composition claims should
-        be supported by appropriate laboratory testing and
-        applicable regulatory requirements.
+    liveTimer: null,
 
-    </p>
+    clockTimer: null,
 
-</div>
+    telemetryTimer: null,
 
+    selectedBatch: null,
 
-<div class="footer">
+    chartData: [],
 
-    Honey Chain System<br>
-    IoT + AI + Secure Digital Traceability
+    liveSeconds: 0,
 
-</div>
+    batches: [],
 
-</div>
+    ledger: []
+
+};
+
+/* =========================================================
+   UTILITY FUNCTIONS
+   ========================================================= */
+
+function $(id){
+    return document.getElementById(id);
+}
+
+function clamp(value,min,max){
+    return Math.max(min,Math.min(max,value));
+}
+
+function randomBetween(min,max){
+    return Math.random()*(max-min)+min;
+}
+
+function round(value,digits=2){
+    return Number(value.toFixed(digits));
+}
+
+function formatNumber(value,digits=2){
+    return Number(value).toFixed(digits);
+}
+
+function nowTime(){
+    return new Date().toLocaleTimeString([],{
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+    });
+}
+
+function nowDate(){
+    return new Date().toLocaleDateString(
+        [],
+        {
+            year:"numeric",
+            month:"short",
+            day:"numeric"
+        }
+    );
+}
+
+function hashString(text){
+
+    let hash1=2166136261;
+    let hash2=16777619;
+
+    for(let i=0;i<text.length;i++){
+
+        const c=text.charCodeAt(i);
+
+        hash1^=c;
+        hash1=Math.imul(hash1,16777619);
+
+        hash2^=c;
+        hash2=Math.imul(hash2,2166136261);
+
+    }
+
+    const a=(hash1>>>0).toString(16).padStart(8,"0");
+    const b=(hash2>>>0).toString(16).padStart(8,"0");
+
+    return (a+b).repeat(4).slice(0,64);
+}
+
+/* =========================================================
+   BATCH DATABASE
+   ========================================================= */
+
+function createBatches(){
+
+    /*
+       Ten deliberately distinct batch records.
+       No two batches use identical origin,
+       floral source, dates, route or processing
+       information.
+    */
+
+    return [
+
+        {
+            id:"HC-2026-001",
+            honey:"Wild Forest Honey",
+            origin:"Adilabad, Telangana",
+            apiary:"Forest Edge Apiary A-17",
+            floral:"Neem & mixed forest bloom",
+            weight:"500 g",
+            harvest:"2026-01-18",
+            processing:"2026-01-20",
+            processingPlant:"Unit A / Hyderabad",
+            dispatch:"2026-01-23",
+            quality:"Verified",
+            qualityDetail:"Moisture record within declared specification",
+            dispatchStatus:"Dispatched",
+            location:"Hyderabad Logistics Hub",
+            coordinates:"17.3850° N, 78.4867° E",
+            lat:17.3850,
+            lng:78.4867,
+            route:"Adilabad → Hyderabad → Retail Network",
+            farmer:"Apiary A-17",
+            certificate:"QC-A17-001"
+        },
+
+        {
+            id:"HC-2026-002",
+            honey:"Acacia Honey",
+            origin:"Nizamabad, Telangana",
+            apiary:"Golden Bloom Apiary N-04",
+            floral:"Acacia bloom",
+            weight:"250 g",
+            harvest:"2026-01-25",
+            processing:"2026-01-27",
+            processingPlant:"Unit B / Nizamabad",
+            dispatch:"2026-01-30",
+            quality:"Verified",
+            qualityDetail:"Batch quality record completed",
+            dispatchStatus:"In Distribution",
+            location:"Nizamabad Distribution Centre",
+            coordinates:"18.6725° N, 78.0941° E",
+            lat:18.6725,
+            lng:78.0941,
+            route:"Nizamabad → Hyderabad → Retail Network",
+            farmer:"Apiary N-04",
+            certificate:"QC-N04-002"
+        },
+
+        {
+            id:"HC-2026-003",
+            honey:"Eucalyptus Honey",
+            origin:"Warangal, Telangana",
+            apiary:"Green Valley Apiary W-22",
+            floral:"Eucalyptus bloom",
+            weight:"500 g",
+            harvest:"2026-02-02",
+            processing:"2026-02-04",
+            processingPlant:"Unit C / Warangal",
+            dispatch:"2026-02-07",
+            quality:"Verified",
+            qualityDetail:"Identity and quality record completed",
+            dispatchStatus:"In Transit",
+            location:"Warangal Transit Corridor",
+            coordinates:"17.9689° N, 79.5941° E",
+            lat:17.9689,
+            lng:79.5941,
+            route:"Warangal → Hyderabad",
+            farmer:"Apiary W-22",
+            certificate:"QC-W22-003"
+        },
+
+        {
+            id:"HC-2026-004",
+            honey:"Multifloral Honey",
+            origin:"Mahbubnagar, Telangana",
+            apiary:"Sunrise Apiary M-08",
+            floral:"Multifloral seasonal bloom",
+            weight:"1 kg",
+            harvest:"2026-02-11",
+            processing:"2026-02-13",
+            processingPlant:"Unit D / Mahbubnagar",
+            dispatch:"2026-02-16",
+            quality:"Verified",
+            qualityDetail:"Complete processing record available",
+            dispatchStatus:"Retail Delivery",
+            location:"Mahbubnagar",
+            coordinates:"16.7488° N, 77.9850° E",
+            lat:16.7488,
+            lng:77.9850,
+            route:"Mahbubnagar → Hyderabad",
+            farmer:"Apiary M-08",
+            certificate:"QC-M08-004"
+        },
+
+        {
+            id:"HC-2026-005",
+            honey:"Jamun Honey",
+            origin:"Khammam, Telangana",
+            apiary:"Riverland Apiary K-31",
+            floral:"Jamun blossom",
+            weight:"350 g",
+            harvest:"2026-02-18",
+            processing:"2026-02-20",
+            processingPlant:"Unit E / Khammam",
+            dispatch:"2026-02-23",
+            quality:"Verified",
+            qualityDetail:"Batch traceability record completed",
+            dispatchStatus:"In Transit",
+            location:"Khammam Route",
+            coordinates:"17.2473° N, 80.1514° E",
+            lat:17.2473,
+            lng:80.1514,
+            route:"Khammam → Hyderabad",
+            farmer:"Apiary K-31",
+            certificate:"QC-K31-005"
+        },
+
+        {
+            id:"HC-2026-006",
+            honey:"Litchi Honey",
+            origin:"Ranga Reddy, Telangana",
+            apiary:"Orchard Apiary R-13",
+            floral:"Litchi orchard bloom",
+            weight:"500 g",
+            harvest:"2026-03-01",
+            processing:"2026-03-03",
+            processingPlant:"Unit F / Hyderabad",
+            dispatch:"2026-03-06",
+            quality:"Verified",
+            qualityDetail:"Recorded quality inspection completed",
+            dispatchStatus:"In Distribution",
+            location:"Ranga Reddy",
+            coordinates:"17.2403° N, 78.4294° E",
+            lat:17.2403,
+            lng:78.4294,
+            route:"Ranga Reddy → Hyderabad",
+            farmer:"Apiary R-13",
+            certificate:"QC-R13-006"
+        },
+
+        {
+            id:"HC-2026-007",
+            honey:"Citrus Blossom Honey",
+            origin:"Siddipet, Telangana",
+            apiary:"Citrus Valley Apiary S-09",
+            floral:"Citrus blossom",
+            weight:"250 g",
+            harvest:"2026-03-10",
+            processing:"2026-03-12",
+            processingPlant:"Unit G / Siddipet",
+            dispatch:"2026-03-15",
+            quality:"Verified",
+            qualityDetail:"Traceability and quality record complete",
+            dispatchStatus:"In Transit",
+            location:"Siddipet Corridor",
+            coordinates:"18.1018° N, 78.8520° E",
+            lat:18.1018,
+            lng:78.8520,
+            route:"Siddipet → Hyderabad",
+            farmer:"Apiary S-09",
+            certificate:"QC-S09-007"
+        },
+
+        {
+            id:"HC-2026-008",
+            honey:"Tulsi Infused Honey",
+            origin:"Medak, Telangana",
+            apiary:"Herbal Bloom Apiary D-14",
+            floral:"Tulsi and mixed floral source",
+            weight:"350 g",
+            harvest:"2026-03-18",
+            processing:"2026-03-20",
+            processingPlant:"Unit H / Medak",
+            dispatch:"2026-03-23",
+            quality:"Verified",
+            qualityDetail:"Processing and packaging record completed",
+            dispatchStatus:"Packed",
+            location:"Medak Processing Facility",
+            coordinates:"18.0453° N, 78.2608° E",
+            lat:18.0453,
+            lng:78.2608,
+            route:"Medak → Hyderabad",
+            farmer:"Apiary D-14",
+            certificate:"QC-D14-008"
+        },
+
+        {
+            id:"HC-2026-009",
+            honey:"Neem Blossom Honey",
+            origin:"Karimnagar, Telangana",
+            apiary:"Deccan Apiary C-27",
+            floral:"Neem blossom",
+            weight:"500 g",
+            harvest:"2026-03-26",
+            processing:"2026-03-28",
+            processingPlant:"Unit I / Karimnagar",
+            dispatch:"2026-03-31",
+            quality:"Verified",
+            qualityDetail:"Final recorded inspection completed",
+            dispatchStatus:"In Transit",
+            location:"Karimnagar Highway Route",
+            coordinates:"18.4386° N, 79.1288° E",
+            lat:18.4386,
+            lng:79.1288,
+            route:"Karimnagar → Hyderabad",
+            farmer:"Apiary C-27",
+            certificate:"QC-C27-009"
+        },
+
+        {
+            id:"HC-2026-010",
+            honey:"Forest Multifloral Honey",
+            origin:"Bhadradri Kothagudem, Telangana",
+            apiary:"Eastern Forest Apiary B-42",
+            floral:"Forest multifloral bloom",
+            weight:"1 kg",
+            harvest:"2026-04-03",
+            processing:"2026-04-05",
+            processingPlant:"Unit J / Kothagudem",
+            dispatch:"2026-04-08",
+            quality:"Verified",
+            qualityDetail:"Final batch documentation recorded",
+            dispatchStatus:"In Distribution",
+            location:"Kothagudem Distribution Route",
+            coordinates:"17.2477° N, 80.6199° E",
+            lat:17.2477,
+            lng:80.6199,
+            route:"Kothagudem → Hyderabad",
+            farmer:"Apiary B-42",
+            certificate:"QC-B42-010"
+        }
+
+    ];
+}
+
+/* =========================================================
+   INITIAL TELEMETRY
+   ========================================================= */
+
+function initializeTelemetry(){
+
+    APP.batches.forEach((batch,index)=>{
+
+        batch.telemetry = {
+
+            temperature:round(
+                randomBetween(21.5,28.5)
+            ),
+
+            humidity:round(
+                randomBetween(45,68)
+            ),
+
+            vibration:round(
+                randomBetween(.04,.32),
+                2
+            ),
+
+            light:Math.round(
+                randomBetween(60,180)
+            ),
+
+            speed:round(
+                randomBetween(25,65)
+            ),
+
+            battery:Math.round(
+                randomBetween(76,99)
+            ),
+
+            signal:Math.round(
+                randomBetween(94,100)
+            ),
+
+            lat:batch.lat,
+            lng:batch.lng,
+
+            progress:index*7
+
+        };
+
+        /*
+           Preserve an immutable consumer-facing snapshot.
+           The live telemetry loop updates only batch.telemetry;
+           this recorded snapshot remains unchanged for consumers.
+        */
+        batch.lastRecordedIOT = {
+            temperature:batch.telemetry.temperature,
+            humidity:batch.telemetry.humidity,
+            vibration:batch.telemetry.vibration,
+            light:batch.telemetry.light,
+            speed:batch.telemetry.speed,
+            battery:batch.telemetry.battery,
+            signal:batch.telemetry.signal,
+            lat:batch.telemetry.lat,
+            lng:batch.telemetry.lng,
+            recordedAt:`${nowDate()} ${nowTime()}`
+        };
+
+    });
+
+}
+
+/* =========================================================
+   MODE CONTROL
+   ========================================================= */
+
+function openChainLogin(){
+
+    if(APP.mode==="consumer"){
+        showToast(
+            "Consumer portal active",
+            "Exit consumer verification before opening the chain portal."
+        );
+        return;
+    }
+
+    APP.mode="chain";
+
+    $("chainPortalCard").style.opacity=".55";
+    $("consumerPortalCard").style.opacity=".45";
+
+    $("consumerOpenButton").disabled=true;
+
+    $("chainModal").classList.add("active");
+
+}
+
+function openConsumerPortal(){
+
+    if(APP.mode==="chain"){
+        showToast(
+            "Chain portal active",
+            "Exit the chain portal before opening consumer verification."
+        );
+        return;
+    }
+
+    APP.mode="consumer";
+
+    $("chainPortalCard").style.opacity=".45";
+    $("consumerPortalCard").style.opacity=".75";
+
+    $("chainOpenButton").disabled=true;
+
+    $("consumerModal").classList.add("active");
+
+}
+
+function closeModal(id){
+
+    $(id).classList.remove("active");
+
+    if(
+        !APP.chainAuthenticated &&
+        !APP.consumerAuthenticated
+    ){
+        APP.mode="none";
+
+        $("chainPortalCard").style.opacity="1";
+        $("consumerPortalCard").style.opacity="1";
+
+        $("chainOpenButton").disabled=false;
+        $("consumerOpenButton").disabled=false;
+    }
+
+}
+
+/* =========================================================
+   CHAIN AUTHENTICATION
+   ========================================================= */
+
+function chainLogin(){
+
+    const id=$("chainId").value.trim();
+    const passcode=$("chainpasscode").value.trim();
+    const role=$("chainRole").value;
+
+    /*
+       Requested simple credentials:
+       ID = 8
+       passcode = 8
+    */
+
+    if(id==="8" && passcode==="8"){
+
+        APP.chainAuthenticated=true;
+        APP.mode="chain";
+
+        $("chainModal").classList.remove("active");
+
+        $("landing").style.display="none";
+
+        document.querySelector(".portal-section").style.display="none";
+
+        $("chainDashboard").classList.add("active");
+
+        $("consumerDashboard").classList.remove("active");
+
+        $("chainWelcome").textContent=
+            `${role} operational session authenticated • Live network monitoring enabled`;
+
+        startLiveSystem();
+
+        showToast(
+            "Access granted",
+            `${role} live operations dashboard is now active.`
+        );
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    }else{
+
+        $("chainMessage").textContent=
+            "Authentication failed. For this configured demonstration environment, use ID 8 and passcode 8.";
+
+        $("chainMessage").style.color="#ff9aaa";
+
+    }
+
+}
+
+/* =========================================================
+   CONSUMER AUTHENTICATION
+   ========================================================= */
+
+function consumerVerify(){
+
+    const id=$("consumerBatch").value.trim().toUpperCase();
+
+    const batch=APP.batches.find(
+        b=>b.id===id
+    );
+
+    if(!batch){
+
+        $("consumerMessage").textContent=
+            "Batch ID not found. Please check the identifier printed on the bottle.";
+
+        $("consumerMessage").style.color="#ff9aaa";
+
+        return;
+
+    }
+
+    $("consumerModal").classList.remove("active");
+
+    APP.consumerAuthenticated=true;
+    APP.mode="consumer";
+    APP.selectedBatch=batch;
+
+    $("landing").style.display="none";
+
+    document.querySelector(".portal-section").style.display="none";
+
+    $("consumerDashboard").classList.add("active");
+
+    $("chainDashboard").classList.remove("active");
+
+    renderConsumerBatch(batch);
+
+    showToast(
+        "Batch verified",
+        `${batch.id} traceability record loaded.`
+    );
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+function consumerVerifyMain(){
+
+    const id=$("consumerBatchMain").value.trim().toUpperCase();
+
+    const batch=APP.batches.find(
+        b=>b.id===id
+    );
+
+    if(!batch){
+
+        $("consumerMainStatus").textContent=
+            "Batch ID not found. No information has been revealed.";
+
+        $("consumerMainStatus").style.color="#ff9aaa";
+
+        $("consumerData").classList.remove("active");
+
+        return;
+
+    }
+
+    APP.selectedBatch=batch;
+
+    $("consumerMainStatus").textContent=
+        `Verified ${batch.id}. Showing latest recorded snapshot. Live operational telemetry remains hidden from the consumer view.`;
+
+    $("consumerMainStatus").style.color="#8debbb";
+
+    renderConsumerBatch(batch);
+
+    showToast(
+        "Verification successful",
+        "Latest recorded batch information displayed."
+    );
+
+}
+
+/* =========================================================
+   CONSUMER RENDER
+   ========================================================= */
+
+function renderConsumerBatch(batch){
+
+    $("consumerBatchHeading").textContent=
+        `VERIFIED • ${batch.id}`;
+
+    $("consumerHoneyName").textContent=
+        batch.honey;
+
+    $("cOrigin").textContent=
+        batch.origin;
+
+    $("cApiary").textContent=
+        batch.apiary;
+
+    $("cFloral").textContent=
+        batch.floral;
+
+    $("cWeight").textContent=
+        batch.weight;
+
+    $("cHarvest").textContent=
+        batch.harvest;
+
+    $("cQuality").textContent=
+        batch.quality;
+
+    $("cQualityDetail").textContent=
+        batch.qualityDetail;
+
+    $("cProcessing").textContent=
+        batch.processingPlant;
+
+    $("cProcessingDate").textContent=
+        batch.processing;
+
+    $("cDispatch").textContent=
+        batch.dispatchStatus;
+
+    $("cDispatchDate").textContent=
+        batch.dispatch;
+
+    $("cLocation").textContent=
+        batch.location;
+
+    $("cCoordinates").textContent=
+        batch.coordinates;
+
+    const recordedIOT=batch.lastRecordedIOT;
+
+    if(recordedIOT){
+        $("consumerIOTRecordedAt").textContent=
+            `Recorded: ${recordedIOT.recordedAt}`;
+
+        $("cIOTTemperature").textContent=
+            `${formatNumber(recordedIOT.temperature,1)} °C`;
+
+        $("cIOTHumidity").textContent=
+            `${formatNumber(recordedIOT.humidity,1)} %RH`;
+
+        $("cIOTVibration").textContent=
+            `${formatNumber(recordedIOT.vibration,2)} g`;
+
+        $("cIOTLight").textContent=
+            `${Math.round(recordedIOT.light)} lux`;
+
+        $("cIOTSpeed").textContent=
+            `${formatNumber(recordedIOT.speed,1)} km/h`;
+
+        $("cIOTBattery").textContent=
+            `${Math.round(recordedIOT.battery)}%`;
+
+        $("cIOTSignal").textContent=
+            `${Math.round(recordedIOT.signal)}%`;
+
+        $("cIOTGPS").textContent=
+            `${formatNumber(recordedIOT.lat,5)}, ${formatNumber(recordedIOT.lng,5)}`;
+    }
+
+    /*
+       Consumer sees the batch's recorded snapshot.
+       The live telemetry update loop never modifies
+       these consumer values.
+    */
+
+    $("lastRecordedLabel").textContent=
+        `LAST RECORDED • ${batch.dispatch} • ${batch.location}`;
+
+    const score=
+        91+
+        (
+            batch.id.charCodeAt(
+                batch.id.length-1
+            )%8
+        );
+
+    $("trustScore").textContent=
+        score+"%";
+
+    renderConsumerTimeline(batch);
+
+    renderConsumerLedger(batch);
+
+    $("consumerData").classList.add("active");
+
+}
+
+/* =========================================================
+   CONSUMER TIMELINE
+   ========================================================= */
+
+function renderConsumerTimeline(batch){
+
+    const items=[
+
+        [
+            "Harvest recorded",
+            batch.harvest,
+            `Honey collected at ${batch.apiary} in ${batch.origin}.`
+        ],
+
+        [
+            "Collection & intake",
+            batch.harvest,
+            "Batch identity associated with the recorded source."
+        ],
+
+        [
+            "Processing recorded",
+            batch.processing,
+            `Recorded at ${batch.processingPlant}.`
+        ],
+
+        [
+            "Quality record",
+            batch.processing,
+            batch.qualityDetail
+        ],
+
+        [
+            "Dispatch recorded",
+            batch.dispatch,
+            `${batch.dispatchStatus} • ${batch.route}`
+        ],
+
+        [
+            "Latest recorded location",
+            batch.dispatch,
+            `${batch.location} • ${batch.coordinates}`
+        ]
+
+    ];
+
+    $("consumerTimeline").innerHTML=
+        items.map(
+            item=>`
+
+            <div class="timeline-item">
+
+                <time>${item[1]}</time>
+
+                <h4>${item[0]}</h4>
+
+                <p>${item[2]}</p>
+
+            </div>
+
+            `
+        ).join("");
+
+}
+
+/* =========================================================
+   CONSUMER LEDGER
+   ========================================================= */
+
+function renderConsumerLedger(batch){
+
+    const blocks=[];
+
+    let previousHash=
+        hashString(
+            "GENESIS-"+batch.id
+        );
+
+    for(let i=1;i<=5;i++){
+
+        const payload=
+            `${batch.id}|${i}|${batch.origin}|${batch.processing}|${batch.dispatch}|${previousHash}`;
+
+        const currentHash=
+            hashString(payload);
+
+        blocks.push({
+
+            index:i,
+
+            event:[
+                "Batch registered",
+                "Source recorded",
+                "Processing recorded",
+                "Quality record",
+                "Dispatch record"
+            ][i-1],
+
+            hash:currentHash,
+
+            time:[
+                batch.harvest,
+                batch.harvest,
+                batch.processing,
+                batch.processing,
+                batch.dispatch
+            ][i-1]
+
+        });
+
+        previousHash=currentHash;
+
+    }
+
+    $("consumerLedger").innerHTML=
+        blocks.map(
+            b=>`
+
+            <div class="chain-block">
+
+                <div class="block-top">
+
+                    <span class="block-index">
+                        BLOCK ${b.index}
+                    </span>
+
+                    <span class="block-time">
+                        ${b.time}
+                    </span>
+
+                </div>
+
+                <div style="margin-top:7px;font-size:11px">
+                    ${b.event}
+                </div>
+
+                <div class="hash">
+                    ${b.hash}
+                </div>
+
+            </div>
+
+            `
+        ).join("");
+
+}
+
+/* =========================================================
+   LIVE SYSTEM
+   ========================================================= */
+
+function startLiveSystem(){
+
+    if(APP.liveTimer){
+        clearInterval(APP.liveTimer);
+    }
+
+    if(APP.clockTimer){
+        clearInterval(APP.clockTimer);
+    }
+
+    if(APP.telemetryTimer){
+        clearInterval(APP.telemetryTimer);
+    }
+
+    renderLiveBatchTable();
+
+    renderLedger();
+
+    generateEvents();
+
+    updateLiveTelemetry();
+
+    APP.liveTimer=setInterval(
+        updateLiveTelemetry,
+        1000
+    );
+
+    APP.clockTimer=setInterval(
+        ()=>{
+            $("lastLiveUpdate").textContent=
+                `Last telemetry: ${nowTime()}`;
+        },
+        1000
+    );
+
+}
+
+/* =========================================================
+   LIVE TELEMETRY UPDATE
+   ========================================================= */
+
+function updateLiveTelemetry(){
+
+    APP.liveSeconds++;
+
+    APP.batches.forEach((batch,index)=>{
+
+        const t=batch.telemetry;
+
+        t.temperature=
+            round(
+                clamp(
+                    t.temperature+
+                    randomBetween(-.45,.45),
+                    20,
+                    31
+                )
+            );
+
+        t.humidity=
+            round(
+                clamp(
+                    t.humidity+
+                    randomBetween(-1.2,1.2),
+                    40,
+                    75
+                )
+            );
+
+        t.vibration=
+            round(
+                clamp(
+                    t.vibration+
+                    randomBetween(-.03,.03),
+                    .02,
+                    .45
+                ),
+                2
+            );
+
+        t.light=
+            Math.round(
+                clamp(
+                    t.light+
+                    randomBetween(-15,15),
+                    30,
+                    240
+                )
+            );
+
+        t.speed=
+            round(
+                clamp(
+                    t.speed+
+                    randomBetween(-3,3),
+                    0,
+                    75
+                )
+            );
+
+        t.battery=
+            clamp(
+                t.battery-
+                randomBetween(0,.015),
+                60,
+                100
+            );
+
+        t.signal=
+            Math.round(
+                clamp(
+                    t.signal+
+                    randomBetween(-1,1),
+                    91,
+                    100
+                )
+            );
+
+        /*
+           GPS movement.
+           The movement is deliberately small because
+           a real vehicle normally moves continuously.
+        */
+
+        const direction=
+            index%2===0?1:-1;
+
+        t.lat+=
+            randomBetween(
+                .00001,
+                .00005
+            )*direction;
+
+        t.lng+=
+            randomBetween(
+                .00001,
+                .00005
+            );
+
+        t.progress=
+            (t.progress+.6)%100;
+
+    });
+
+    updateFleetMetrics();
+
+    renderLiveBatchTable();
+
+    updateTelemetryCards();
+
+    updateVehicle();
+
+    updateChart();
+
+    maybeGenerateLiveEvent();
+
+}
+
+/* =========================================================
+   FLEET TABLE
+   ========================================================= */
+
+function renderLiveBatchTable(){
+
+    $("liveBatchTable").innerHTML=
+        APP.batches.map(
+            (batch,index)=>{
+
+                const t=batch.telemetry;
+
+                const tempClass=
+                    t.temperature>29?
+                    "warn":
+                    "good";
+
+                const signalClass=
+                    t.signal<94?
+                    "warn":
+                    "good";
+
+                const stages=[
+                    "Harvest",
+                    "Collection",
+                    "Processing",
+                    "Quality Check",
+                    "Packing",
+                    "Dispatch",
+                    "In Transit",
+                    "Distribution",
+                    "Retail",
+                    "Delivered"
+                ];
+
+                const stage=
+                    stages[
+                        Math.floor(
+                            (index+
+                            APP.liveSeconds/35)
+                            %stages.length
+                        )
+                    ];
+
+                return `
+
+                <tr>
+
+                    <td>
+                        <span class="batch-code">
+                            ${batch.id}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${stage}
+                    </td>
+
+                    <td class="${tempClass}">
+                        ${formatNumber(t.temperature)} °C
+                    </td>
+
+                    <td>
+                        ${formatNumber(t.humidity)}%
+                    </td>
+
+                    <td>
+                        ${formatNumber(t.lat,5)},
+                        ${formatNumber(t.lng,5)}
+                    </td>
+
+                    <td>
+
+                        <span class="signal ${signalClass}">
+
+                            <i></i>
+
+                            ${t.signal}%
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+/* =========================================================
+   FLEET METRICS
+   ========================================================= */
+
+function updateFleetMetrics(){
+
+    const signals=
+        APP.batches.reduce(
+            (sum,b)=>sum+b.telemetry.signal,
+            0
+        )/APP.batches.length;
+
+    $("IOTMetric").textContent=
+        40;
+
+    $("vehicleMetric").textContent=
+        APP.batches.length;
+
+    $("lastLiveUpdate").textContent=
+        `Last telemetry: ${nowTime()} • Avg signal ${signals.toFixed(1)}%`;
+
+}
+
+/* =========================================================
+   TELEMETRY CARDS
+   ========================================================= */
+
+function updateTelemetryCards(){
+
+    const values=
+        APP.batches.map(
+            b=>b.telemetry
+        );
+
+    const avg=(key)=>
+        values.reduce(
+            (s,v)=>s+v[key],
+            0
+        )/values.length;
+
+    const temp=avg("temperature");
+    const humidity=avg("humidity");
+    const vibration=avg("vibration");
+    const light=avg("light");
+
+    $("liveTemp").textContent=
+        temp.toFixed(1);
+
+    $("liveHumidity").textContent=
+        humidity.toFixed(1);
+
+    $("liveVibration").textContent=
+        vibration.toFixed(2);
+
+    $("liveLight").textContent=
+        Math.round(light);
+
+    $("tempBar").style.width=
+        clamp(
+            ((temp-15)/20)*100,
+            10,
+            100
+        )+"%";
+
+    $("humidityBar").style.width=
+        clamp(
+            humidity,
+            10,
+            100
+        )+"%";
+
+    $("vibrationBar").style.width=
+        clamp(
+            vibration*220,
+            5,
+            100
+        )+"%";
+
+    $("lightBar").style.width=
+        clamp(
+            light/3,
+            5,
+            100
+        )+"%";
+
+}
+
+/* =========================================================
+   GPS VEHICLE ANIMATION
+   ========================================================= */
+
+function updateVehicle(){
+
+    const seconds=
+        APP.liveSeconds;
+
+    const x=
+        12+
+        (
+            (seconds%24)/24
+        )*76;
+
+    const wave=
+        4*Math.sin(seconds/2);
+
+    const y=
+        53-wave;
+
+    $("vehicle").style.left=
+        x+"%";
+
+    $("vehicle").style.top=
+        y+"%";
+
+}
+
+/* =========================================================
+   LIVE CHART
+   ========================================================= */
+
+function updateChart(){
+
+    const value=
+        APP.batches.reduce(
+            (sum,b)=>
+                sum+b.telemetry.temperature,
+            0
+        )/APP.batches.length;
+
+    APP.chartData.push(value);
+
+    if(APP.chartData.length>30){
+        APP.chartData.shift();
+    }
+
+    const data=APP.chartData;
+
+    if(data.length<2){
+        return;
+    }
+
+    const width=800;
+    const height=160;
+
+    const min=18;
+    const max=32;
+
+    const points=data.map(
+        (v,i)=>{
+
+            const x=
+                (i/(data.length-1))*width;
+
+            const y=
+                height-
+                ((v-min)/(max-min))*height;
+
+            return [x,y];
+
+        }
+    );
+
+    const d=
+        points.map(
+            (p,i)=>
+                `${i===0?"M":"L"}${p[0]} ${p[1]}`
+        ).join(" ");
+
+    const fill=
+        d+
+        ` L ${width} ${height} L 0 ${height} Z`;
+
+    $("chartPath").setAttribute(
+        "d",
+        d
+    );
+
+    $("chartFill").setAttribute(
+        "d",
+        fill
+    );
+
+    $("chartPoints").innerHTML=
+        points.map(
+            p=>
+                `<circle
+                    class="chart-point"
+                    cx="${p[0]}"
+                    cy="${p[1]}"
+                    r="3"/>`
+        ).join("");
+
+}
+
+/* =========================================================
+   BLOCKCHAIN-STYLE LEDGER
+   ========================================================= */
+
+function renderLedger(){
+
+    const blocks=[];
+
+    let previous=
+        hashString(
+            "HONEYCHAIN-GENESIS"
+        );
+
+    for(let i=0;i<5;i++){
+
+        const batch=
+            APP.batches[i];
+
+        const payload=
+            `${batch.id}|${batch.origin}|${batch.processing}|${batch.dispatch}|${previous}`;
+
+        const current=
+            hashString(payload);
+
+        blocks.push({
+
+            index:i,
+
+            batch:batch.id,
+
+            event:[
+                "SOURCE REGISTRATION",
+                "HARVEST EVENT",
+                "PROCESSING EVENT",
+                "QUALITY EVENT",
+                "LOGISTICS EVENT"
+            ][i],
+
+            hash:current,
+
+            previous
+
+        });
+
+        previous=current;
+
+    }
+
+    $("chainList").innerHTML=
+        blocks.map(
+            block=>`
+
+            <div class="chain-block">
+
+                <div class="block-top">
+
+                    <span class="block-index">
+                        BLOCK ${block.index}
+                    </span>
+
+                    <span class="block-time">
+                        ${block.batch}
+                    </span>
+
+                </div>
+
+                <div style="
+                    margin-top:7px;
+                    font-size:10px;
+                    color:#cbd8d0">
+                    ${block.event}
+                </div>
+
+                <div class="hash">
+                    ${block.hash}
+                </div>
+
+            </div>
+
+            `
+        ).join("");
+
+}
+
+/* =========================================================
+   LIVE EVENT ENGINE
+   ========================================================= */
+
+const EVENT_LIBRARY=[
+
+    "GPS heartbeat received",
+
+    "Temperature telemetry synchronized",
+
+    "Humidity telemetry synchronized",
+
+    "Batch position updated",
+
+    "IOT gateway acknowledged",
+
+    "Vehicle telemetry packet received",
+
+    "Supply-chain event appended",
+
+    "Ledger integrity check passed",
+
+    "Sensor heartbeat verified",
+
+    "Route continuity confirmed",
+
+    "Container telemetry synchronized",
+
+    "Batch monitoring heartbeat received"
+
+];
+
+function generateEvents(){
+
+    const container=
+        $("liveEvents");
+
+    const initial=
+        APP.batches.slice(0,5).map(
+            (batch,index)=>`
+
+            <div class="timeline-item">
+
+                <time>${nowTime()}</time>
+
+                <h4>${EVENT_LIBRARY[index]}</h4>
+
+                <p>
+                    ${batch.id} •
+                    ${batch.location}
+                </p>
+
+            </div>
+
+            `
+        );
+
+    container.innerHTML=
+        initial.join("");
+
+}
+
+function maybeGenerateLiveEvent(){
+
+    if(APP.liveSeconds%2!==0){
+        return;
+    }
+
+    const batch=
+        APP.batches[
+            Math.floor(
+                Math.random()*APP.batches.length
+            )
+        ];
+
+    const event=
+        EVENT_LIBRARY[
+            Math.floor(
+                Math.random()*EVENT_LIBRARY.length
+            )
+        ];
+
+    const item=
+        document.createElement("div");
+
+    item.className="timeline-item";
+
+    item.innerHTML=`
+
+        <time>${nowTime()}</time>
+
+        <h4>${event}</h4>
+
+        <p>
+            ${batch.id} •
+            GPS ${formatNumber(batch.telemetry.lat,5)},
+            ${formatNumber(batch.telemetry.lng,5)}
+        </p>
+
+    `;
+
+    $("liveEvents").prepend(item);
+
+    while(
+        $("liveEvents").children.length>7
+    ){
+        $("liveEvents").lastElementChild.remove();
+    }
+
+}
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+function logoutToLanding(){
+
+    if(APP.liveTimer){
+        clearInterval(APP.liveTimer);
+        APP.liveTimer=null;
+    }
+
+    if(APP.clockTimer){
+        clearInterval(APP.clockTimer);
+        APP.clockTimer=null;
+    }
+
+    if(APP.telemetryTimer){
+        clearInterval(APP.telemetryTimer);
+        APP.telemetryTimer=null;
+    }
+
+    APP.mode="none";
+    APP.chainAuthenticated=false;
+    APP.consumerAuthenticated=false;
+    APP.selectedBatch=null;
+    APP.liveSeconds=0;
+    APP.chartData=[];
+
+    $("chainDashboard").classList.remove("active");
+    $("consumerDashboard").classList.remove("active");
+
+    $("landing").style.display="grid";
+
+    document.querySelector(".portal-section").style.display="block";
+
+    $("chainPortalCard").style.opacity="1";
+    $("consumerPortalCard").style.opacity="1";
+
+    $("chainOpenButton").disabled=false;
+    $("consumerOpenButton").disabled=false;
+
+    $("consumerData").classList.remove("active");
+
+    $("consumerBatch").value="";
+    $("consumerBatchMain").value="";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    showToast(
+        "Session closed",
+        "The selected portal has been securely exited."
+    );
+
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer=null;
+
+function showToast(title,message){
+
+    $("toastTitle").textContent=title;
+    $("toastMessage").textContent=message;
+
+    $("toast").classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(
+        ()=>{
+            $("toast").classList.remove("show");
+        },
+        4200
+    );
+
+}
+
+/* =========================================================
+   KEYBOARD SHORTCUTS
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key==="Escape"){
+
+            document
+                .querySelectorAll(".modal.active")
+                .forEach(
+                    modal=>
+                        modal.classList.remove("active")
+                );
+
+            if(
+                !APP.chainAuthenticated &&
+                !APP.consumerAuthenticated
+            ){
+                APP.mode="none";
+
+                $("chainPortalCard").style.opacity="1";
+                $("consumerPortalCard").style.opacity="1";
+
+                $("chainOpenButton").disabled=false;
+                $("consumerOpenButton").disabled=false;
+            }
+
+        }
+
+        if(
+            event.key==="Enter" &&
+            $("chainModal").classList.contains("active")
+        ){
+            chainLogin();
+        }
+
+        if(
+            event.key==="Enter" &&
+            $("consumerModal").classList.contains("active")
+        ){
+            consumerVerify();
+        }
+
+    }
+);
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        APP.batches=createBatches();
+
+        initializeTelemetry();
+
+        setTimeout(
+            ()=>{
+                $("boot").classList.add("hide");
+            },
+            5000
+        );
+
+        showToast(
+            "HoneyChain ready",
+            "Traceability network initialized."
+        );
+
+    }
+);
+
+/* =========================================================
+   PREVENT CONSUMER LIVE DATA LEAK
+   ========================================================= */
+
+Object.defineProperty(
+    window,
+    "CHAIN_INTERNAL_ONLY",
+    {
+        value:true,
+        writable:false
+    }
+);
+
+/*
+    IMPORTANT ARCHITECTURE RULE:
+
+    The consumer renderer reads only:
+      - batch master record
+      - recorded historical events
+
+    It does NOT read the changing telemetry values.
+
+    The chain dashboard reads:
+      - batch.telemetry
+      - GPS
+      - sensor values
+      - live event stream
+
+    Therefore selecting the consumer portal never
+    starts or displays the operational live dashboard.
+*/
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+document.querySelectorAll("button").forEach(
+    button=>{
+        button.addEventListener(
+            "focus",
+            ()=>{
+                button.style.outline=
+                    "2px solid rgba(255,201,40,.35)";
+                button.style.outlineOffset="3px";
+            }
+        );
+
+        button.addEventListener(
+            "blur",
+            ()=>{
+                button.style.outline="";
+                button.style.outlineOffset="";
+            }
+        );
+    }
+);
+
+/* =========================================================
+   END APPLICATION
+   ========================================================= */
+</script>
 
 </body>
 </html>
